@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 登录开启2步验证
+// Otp 登录开启otp验证
 func Otp(c *gin.Context) {
 	var formData model.User
 	_ = c.ShouldBindJSON(&formData)
