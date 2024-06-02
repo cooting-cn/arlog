@@ -54,6 +54,5 @@ func DbInit() {
 		log.Info("没有admin用户,添加admin")
 
 	}
-	//Db.Create(&user)
 
 }
