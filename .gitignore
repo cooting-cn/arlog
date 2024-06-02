@@ -1,0 +1,6 @@
+# 默认忽略的文件
+.idea/
+config.json
+/tmp/
+/shelf/
+.git/
