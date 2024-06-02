@@ -1,0 +1,23 @@
+
+{
+  "web": {
+    "port": 80
+  },
+  "mysql": {
+    "host": "mysql地址",
+    "port": 3306,
+    "name": "账号",
+    "password": "密码",
+    "db": "arlog"
+  },
+  "object": {
+    "url": "存储地址",
+    "id": "密钥",
+    "key": "密钥的key",
+    "path": "文件路径"
+  },
+  "jwt": {
+    "CustomSecret": "Arneb",
+    "Issuer": "cooting"
+  }
+}
