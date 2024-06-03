@@ -3,5 +3,9 @@
 </script>
 
 <template>
-<h1>6666</h1>
+<h1>这是首页面</h1>
 </template>
+
+<style scoped>
+
+</style>
