@@ -1,9 +1,16 @@
-FROM golang:1.21-alpine as goBuilder
+FROM golang:1.21-alpine3.20 as goBuilder
 WORKDIR /arlog
 COPY . /arlog/
-RUN CGO_ENABLED=0 go build
+RUN  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-s -w --extldflags "-static -fpic"' go build  -v
 
-FROM alpine:3.18.6 as runtime
-
+FROM alpine:3.20 as runtime
+ENV LANG=C.UTF-8
+ENV TZ=Asia/Shanghai
+WORKDIR /
+#RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
+#    && apk add --no-cache vim iproute2 bash tini curl  tzdata \
+#    && rm -rf /var/cache/apk/*
 COPY --from=goBuilder /arlog/arlog /
-CMD /arlog
+#COPY  arlog /
+#CMD tini -g -- /arlog
+CMD /arlo
