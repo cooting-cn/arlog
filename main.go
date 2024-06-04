@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	core.ConfInit()   //初始化配置
 	logs.InitLog()    //初始化log
+	core.ConfInit()   //初始化配置
 	gorm.DbInit()     //初始化mysql
 	gorm.CasbinInit() //初始化权限
 	object.CosInit()  //初始化对象存储
