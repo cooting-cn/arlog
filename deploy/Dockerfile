@@ -10,7 +10,7 @@ WORKDIR /
 #RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
 #    && apk add --no-cache vim iproute2 bash tini curl  tzdata \
 #    && rm -rf /var/cache/apk/*
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories && apk add --no-cache tzdata&& rm -rf /var/cache/apk/*
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories && apk add  tzdata&& rm -rf /var/cache/apk/*
 
 COPY --from=goBuilder /arlog/arlog /
 COPY config.json  /
