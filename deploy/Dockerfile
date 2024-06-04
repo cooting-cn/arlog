@@ -1,7 +1,7 @@
 FROM golang:1.21-alpine3.20 as goBuilder
 WORKDIR /arlog
 COPY . /arlog/
-RUN  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-s -w --extldflags "-static -fpic"' go build  -v
+RUN  CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-s -w --extldflags "-static -fpic"'
 
 FROM alpine:3.20 as runtime
 ENV LANG=C.UTF-8
