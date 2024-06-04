@@ -11,6 +11,6 @@ WORKDIR /
 #    && apk add --no-cache vim iproute2 bash tini curl  tzdata \
 #    && rm -rf /var/cache/apk/*
 COPY --from=goBuilder /arlog/arlog /
-#COPY  arlog /
+COPY config.json  /
 #CMD tini -g -- /arlog
-CMD /arlo
+CMD /arlog
