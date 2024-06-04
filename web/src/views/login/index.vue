@@ -6,6 +6,8 @@ const password = ref('')
 
 function login() {
   console.log("登录")
+
+  console.log(window.location.origin)
 }
 </script>
 
@@ -19,7 +21,7 @@ function login() {
       <div style="text-align: center;">
         <div class="flex-item">
           <!--      版本标签    -->
-          <el-tag :disable-transitions=true :round=true type="primary">v-1.21</el-tag>
+          <el-tag :disable-transitions=true :round=true style="font-size: 15px" type="primary">v-1.21</el-tag>
         </div>
         <h1 style="margin-top: 15px">arlog登录</h1>
       </div>
