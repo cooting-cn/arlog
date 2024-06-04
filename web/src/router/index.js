@@ -7,7 +7,7 @@ const router = createRouter({
         {
             /*首页*/
             path: '/',
-            name: 'home',
+            name: 'index',
             component: () => import('@/views/home/index.vue'),
         },
         {
