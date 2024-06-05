@@ -1,13 +1,53 @@
 <script setup>
 import {UserFilled, Lock} from "@element-plus/icons-vue";
+import blogStore from "@/stores/arlog.js";
+import api from "@/api/api.js";
+import router from "@/router/index.js";
 
-const username = ref('')
-const password = ref('')
 
+/*绑定本地持久化*/
+const blogSt = blogStore()
+/*创建登录用户变量*/
+const userLogin = reactive({
+  username: "admin",
+  password: "admin"
+})
+
+/*登录按钮*/
 function login() {
-  console.log("登录")
-
   console.log(window.location.origin)
+  api.postLogin(userLogin).then(
+      res => {
+        /*调用公共处理登录*/
+        btLogin(res)
+      }
+  )
+}
+
+/*公告调用登录*/
+function btLogin(res) {
+  if (res.data.code === 200) {
+
+    console.log("登录成功！")
+    router.push("admin")
+    /*存储token*/
+    blogSt.token = res.data.data.token
+    /*存储用户名*/
+    blogSt.user = res.data.data.user.username
+    ElMessage({
+      showClose: true,
+      message: res.data.msg + '-登录成功！',
+      type: 'success'
+
+    })
+  } else {
+    console.log("登录失败！")
+    ElMessage({
+      showClose: true,
+      message: res.data.msg,
+      type: 'error',
+    })
+  }
 }
 </script>
 
@@ -29,11 +69,11 @@ function login() {
       <!--    表单用户 密码  -->
       <!--   用户   -->
       <div class="sr">
-        <el-input v-model="username" :prefix-icon="UserFilled" class="custom-input" placeholder="用户名"/>
+        <el-input v-model="userLogin.username" :prefix-icon="UserFilled" class="custom-input" placeholder="用户名"/>
       </div>
       <!--    密码  -->
       <div class="sr">
-        <el-input v-model="password" :prefix-icon="Lock" class="custom-input" placeholder="密码" show-password
+        <el-input v-model="userLogin.password" :prefix-icon="Lock" class="custom-input" placeholder="密码" show-password
                   type="password"/>
       </div>
 

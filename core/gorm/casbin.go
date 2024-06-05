@@ -61,7 +61,7 @@ func CasbinMiddleWare() func(c *gin.Context) {
 
 		if !ok {
 			//返回无权限
-			res.Ask(c, 209, nil)
+			res.Ask(c, 403, nil)
 
 			logs.Info("casbin校验出错无权限", gin.H{
 				"ok":       ok,
