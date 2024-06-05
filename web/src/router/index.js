@@ -9,6 +9,7 @@ const router = createRouter({
             path: '/',
             name: 'index',
             component: () => import('@/views/home/index.vue'),
+
         },
         {
             /*登录页面*/
