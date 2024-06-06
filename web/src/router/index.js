@@ -8,7 +8,7 @@ const router = createRouter({
             /*首页*/
             path: '/',
             name: 'index',
-            component: () => import('@/views/home/index.vue'),
+            component: () => import('@/layout/home.vue'),
 
         },
         {
