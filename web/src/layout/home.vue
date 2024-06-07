@@ -18,8 +18,8 @@ import Header from "@/components/home/header.vue";
         <el-header style="background: #fff;">
           <Header/>
         </el-header>
-
-        <el-main>Main
+        <!--内容页面-->
+        <el-main>
           <router-view></router-view>
         </el-main>
 
@@ -41,6 +41,7 @@ import Header from "@/components/home/header.vue";
 
 .common-layout {
   height: 100%;
-  background: rgba(240, 234, 241, 0.51);
+  /*background: rgba(240, 234, 241, 0.51);*/
+  background-color: var(--el-bg-color-page);
 }
 </style>
