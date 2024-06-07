@@ -15,7 +15,7 @@ import Header from "@/components/home/header.vue";
 
       <el-container>
         <!--这是个导航头-->
-        <el-header>
+        <el-header style="background: #fff;">
           <Header/>
         </el-header>
 
@@ -41,5 +41,6 @@ import Header from "@/components/home/header.vue";
 
 .common-layout {
   height: 100%;
+  background: rgba(240, 234, 241, 0.51);
 }
 </style>
