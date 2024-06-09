@@ -15,12 +15,18 @@ import Header from "@/components/home/header.vue";
 
       <el-container>
         <!--这是个导航头-->
-        <el-header style="background: #fff;">
+        <el-header class="header-container">
+
           <Header/>
+
+
         </el-header>
         <!--内容页面-->
-        <el-main>
+        <el-main style="background: white;margin-top: 15px">
+
           <router-view></router-view>
+
+
         </el-main>
 
       </el-container>
@@ -32,7 +38,11 @@ import Header from "@/components/home/header.vue";
 </template>
 
 <style scoped>
-
+.header-container {
+  position: relative; /* 或者 absolute, fixed */
+  top: 2px; /* 将容器向下移动20像素 */
+  background: #fff;
+}
 
 .el-container {
   height: 100%;
