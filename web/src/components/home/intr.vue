@@ -142,7 +142,7 @@ const activities = [
 <style scoped>
 /*友链*/
 .alignment-container {
-  height: 100px;
+  height: 120px;
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
 
