@@ -28,7 +28,7 @@ import Header from "@/components/home/header.vue";
             <router-view></router-view>
           </el-main>
 
-          <el-aside style="background: #c64444;margin-top: 15px;" width="400px">
+          <el-aside style="background: rgba(114,114,112,0.11);margin-top: 15px;" width="400px">
             <!-- 右侧页面内容 -->
             <h1>6666</h1>
           </el-aside>
