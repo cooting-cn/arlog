@@ -11,10 +11,12 @@ function ss() {
 
 <template>
   <div class="hed">
+    <div style="width: 60px;align-items: center;  display: flex;">
+      <!--头像-->
+      <el-avatar src="https://tg-image.com/file/8619addedd88492fc2da1.jpg"/>
+      <!--首页    -->
+    </div>
 
-    <!--头像-->
-    <el-avatar src="https://tg-image.com/file/8619addedd88492fc2da1.jpg"/>
-    <!--首页    -->
 
     <el-menu active-text-color="black"
              mode="horizontal"

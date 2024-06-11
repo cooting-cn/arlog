@@ -21,14 +21,19 @@ import Header from "@/components/home/header.vue";
 
 
         </el-header>
-        <!--内容页面-->
-        <el-main style="background: white;margin-top: 15px">
+        <el-container>
+          <!--内容页面-->
+          <el-main style="background: white;margin-top: 15px;width: 100%;">
 
-          <router-view></router-view>
+            <router-view></router-view>
+          </el-main>
 
+          <el-aside style="background: #c64444;margin-top: 15px;" width="400px">
+            <!-- 右侧页面内容 -->
+            <h1>6666</h1>
+          </el-aside>
 
-        </el-main>
-
+        </el-container>
       </el-container>
 
     </el-container>
