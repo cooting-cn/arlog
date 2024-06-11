@@ -21,16 +21,31 @@ import Header from "@/components/home/header.vue";
 
 
         </el-header>
-        <el-container>
+        <el-container style="width: 1500px">
           <!--内容页面-->
-          <el-main style="background: white;margin-top: 15px;width: 100%;">
+          <el-main style="background: white;margin-top: 15px;">
 
             <router-view></router-view>
           </el-main>
 
-          <el-aside style="background: rgba(114,114,112,0.11);margin-top: 15px;" width="400px">
+          <el-aside style="margin-top: 15px;width: 400px;">
             <!-- 右侧页面内容 -->
-            <h1>6666</h1>
+            <div style="margin-left: 10px">
+              <el-space direction="vertical">
+                <el-card v-for="i in 4" :key="i" class="box-card" style="width: 380px;">
+                  <template #header>
+                    <div class="card-header">
+                      <span>Card name</span>
+                      <el-button class="button" text>Operation button</el-button>
+                    </div>
+                  </template>
+                  <div v-for="o in 3" :key="o" class="text item">
+                    {{ 'List item ' + o }}
+                  </div>
+                </el-card>
+              </el-space>
+            </div>
+
           </el-aside>
 
         </el-container>
