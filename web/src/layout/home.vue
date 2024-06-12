@@ -1,5 +1,12 @@
 <script setup>
 
+const fits = [
+  'fill',
+  'contain',
+  'cover',
+  'none',
+  'scale-down',
+]
 
 import Intr from "@/components/home/intr.vue";
 import Header from "@/components/home/header.vue";
@@ -21,29 +28,33 @@ import Header from "@/components/home/header.vue";
 
 
         </el-header>
-        <el-container style="width: 1500px">
+        <el-container>
           <!--内容页面-->
-          <el-main style="background: white;margin-top: 15px;">
+          <el-main style="background: white;margin-top: 15px;overflow-y: hidden;min-width: 800px ">
 
             <router-view></router-view>
           </el-main>
 
-          <el-aside style="margin-top: 15px;width: 400px;">
-            <!-- 右侧页面内容 -->
-            <div style="margin-left: 10px">
-              <el-space direction="vertical">
-                <el-card v-for="i in 4" :key="i" class="box-card" style="width: 380px;">
-                  <template #header>
-                    <div class="card-header">
-                      <span>Card name</span>
-                      <el-button class="button" text>Operation button</el-button>
-                    </div>
-                  </template>
-                  <div v-for="o in 3" :key="o" class="text item">
-                    {{ 'List item ' + o }}
-                  </div>
-                </el-card>
-              </el-space>
+          <!-- 右侧页面内容 -->
+          <el-aside style="margin-top: 15px;width: 25%;overflow-y: hidden;overflow-x: hidden;">
+            <div style="margin-left: 10px; height: 100%">
+              <div class="demo-image">
+                <span class="demonstration">腾讯云推广</span>
+                <a href="https://baidu.com">
+                  <el-image fit="fill"
+                            src="https://tg-image.com/file/3ed9dfaa8ae4d501e1f30.png"
+                  />
+                </a>
+              </div>
+              <div class="demo-image" style="height: 400px">
+                <span class="demonstration">腾讯云推广</span>
+                <a href="https://baidu.com">
+                  <el-image fit="fill"
+                            src="https://tg-image.com/file/342fd8c1f8e473cc5580a.png"
+                  />
+                </a>
+              </div>
+
             </div>
 
           </el-aside>
@@ -58,6 +69,29 @@ import Header from "@/components/home/header.vue";
 </template>
 
 <style scoped>
+.demo-image .block {
+  padding: 30px 0;
+  text-align: center;
+  border-right: solid 1px var(--el-border-color);
+  display: inline-block;
+
+  box-sizing: border-box;
+  vertical-align: top;
+}
+
+.demo-image .block:last-child {
+  border-right: none;
+}
+
+.demo-image .demonstration {
+  display: block;
+  text-align: center;
+  color: var(--el-text-color-secondary);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/**/
 .header-container {
   position: relative; /* 或者 absolute, fixed */
   top: 2px; /* 将容器向下移动20像素 */
@@ -71,7 +105,7 @@ import Header from "@/components/home/header.vue";
 
 .common-layout {
   height: 100%;
-  /*background: rgba(240, 234, 241, 0.51);*/
-  background-color: var(--el-bg-color-page);
+  background: rgba(144, 141, 141, 0.18);
+  /*  background-color: var(--el-bg-color-page);*/
 }
 </style>

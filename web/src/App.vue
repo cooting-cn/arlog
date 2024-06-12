@@ -23,8 +23,7 @@ html {
   width: 100%;
   height: 100%;
   line-height: 1.5;
-  tab-size: 4;
-  text-size-adjust: 100%;
+
 }
 
 body {
