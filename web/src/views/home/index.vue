@@ -7,7 +7,7 @@ const txt = ref('接兼职，自建云waf防火墙，运维，监控，k8s等 �
 </script>
 
 <template>
-  <div>
+  <div style="overflow-y: hidden;">
     <!-- 内容公告    -->
     <div style="max-width: 100%;">
       <el-check-tag checked style=" display: flex;align-items: center;" type="danger">
@@ -24,12 +24,12 @@ const txt = ref('接兼职，自建云waf防火墙，运维，监控，k8s等 �
         </el-text>
       </el-check-tag>
     </div>
+
+
     <!--文章内容-->
+    <div style="margin-top: 20px;">
 
-
-    <div style="margin-top: 20px">
-
-      <el-space :fill="fill" style="width: 100%" wrap>
+      <el-space :fill="fill" :size="10" style="width: 100%" wrap>
         <el-card v-for="i in 6" :key="i" class="box-card">
 
           <div v-for="o in 3" :key="o" class="text item">
@@ -37,6 +37,14 @@ const txt = ref('接兼职，自建云waf防火墙，运维，监控，k8s等 �
           </div>
         </el-card>
       </el-space>
+      <!-- 分页   -->
+      <el-pagination :total="500"
+                     background
+                     class="mt-4"
+                     layout="prev, pager, next"
+                     small
+                     style="margin-top: 20px;"
+      />
     </div>
 
 
