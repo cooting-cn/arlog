@@ -72,7 +72,7 @@
 ## 功能预览
 
 ![登录.png](docs/login.png)
-![首页.png](docs/vxzf.png)
+![首页.png](docs/home.png)
 ![发帖.png](docs/vxzf.png)
 ![发动态.png](docs/vxzf.png)
 ![个人中心.png](docs/vxzf.png)
