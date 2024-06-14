@@ -30,8 +30,8 @@ import Header from "@/components/home/header.vue";
         </el-header>
         <el-container>
           <!--内容页面-->
-          <el-main style="background: white;margin-top: 15px;min-width: 800px; ">
-
+          <el-main style="background: white;margin-top: 15px;min-width: 800px; overflow-y: hidden;">
+         
             <router-view></router-view>
           </el-main>
 
