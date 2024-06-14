@@ -96,26 +96,6 @@ const txt = ref('接兼职，自建云waf防火墙，运维，监控，k8s等 �
 </template>
 
 <style scoped>
-.infinite-list {
-  height: 300px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.infinite-list .infinite-list-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 50px;
-  background: var(--el-color-primary-light-9);
-  margin: 10px;
-  color: var(--el-color-primary);
-}
-
-.infinite-list .infinite-list-item + .list-item {
-  margin-top: 10px;
-}
 
 /**/
 
