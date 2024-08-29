@@ -2,21 +2,30 @@
 import {useMessage} from "naive-ui";
 
 const logininfo = ref({
-  username: 'admin',
-  password: 'admin',
+  username: '',
+  password: '',
 })
 
 const msg = useMessage()
 
 function login() {
+  // 显示加载中的消息
+  msg.loading("正在验证")
+
+  // 显示成功消息
   msg.success("登录")
+
+  // 销毁所有消息
+  msg.destroyAll()
   console.log(logininfo.value)
 }
 </script>
 
 <template>
+
+
   <div
-      class="flex justify-center items-center h-screen bg-no-repeat bg-bottom bg-contain bg-[url(https://app.cloudcone.com.cn/assets/img/login-background.png)]">
+      class=" flex justify-center items-center h-screen bg-no-repeat bg-bottom bg-contain bg-[url(https://app.cloudcone.com.cn/assets/img/login-background.png)]">
 
     <!--登录框-->
     <n-card class=" w-400px h-350px  shadow-md " hoverable style="border-radius: 12px;">
@@ -27,35 +36,38 @@ function login() {
         arlog
       </h2>
 
-      <!--用户输入框-->
-      <n-input v-model:value="logininfo.username"
-               :maxlength="8"
-               class="mt-32 h-40 items-center"
-               placeholder="用户"
-               round
-               size="large"
-      >
+      <form>
+        <!--用户输入框-->
+        <n-input v-model:value="logininfo.username"
+                 :input-props="{ autocomplete: 'username' }"
+                 :maxlength="8"
+                 class="mt-32 h-40 items-center"
+                 placeholder="用户"
+                 round
+                 size="large"
+        >
 
-        <template #prefix>
-          <i class="i-ep-user mr-12 opacity-60"/>
-        </template>
-      </n-input>
+          <template #prefix>
+            <i class="i-ep-user mr-12 opacity-60"/>
+          </template>
+        </n-input>
 
-      <!--密码输入框-->
-      <n-input v-model:value="logininfo.password"
-               :maxlength="20"
-               class="mt-20 h-40 items-center"
-               placeholder="密码"
-               round
-               show-password-on="mousedown"
-               size="large"
-               type="password"
-      >
-        <template #prefix>
-          <i class="i-ep-lock mr-12 opacity-60"/>
-        </template>
-      </n-input>
-
+        <!--密码输入框-->
+        <n-input v-model:value="logininfo.password"
+                 :input-props="{ autocomplete: 'new-password' }"
+                 :maxlength="20"
+                 class="mt-20 h-40 items-center"
+                 placeholder="密码"
+                 round
+                 show-password-on="mousedown"
+                 size="large"
+                 type="password"
+        >
+          <template #prefix>
+            <i class="i-ep-lock mr-12 opacity-60"/>
+          </template>
+        </n-input>
+      </form>
       <!--登录按钮区域-->
       <div class="mt-30 flex items-center">
         <n-button

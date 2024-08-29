@@ -17,15 +17,19 @@ const naiveThemeOverrides = {
 
 
 <template>
-  <!--设置全局属性主题配置  -->
-  <n-config-provider
-      :date-locale="dateZhCN"
-      :locale="zhCN"
-      :theme-overrides="naiveThemeOverrides"
-  >
-    <!--加载路由-->
-    <router-view/>
-  </n-config-provider>
+  <n-message-provider>
+
+    <!--设置全局属性主题配置  -->
+    <n-config-provider
+        :date-locale="dateZhCN"
+        :locale="zhCN"
+        :theme-overrides="naiveThemeOverrides"
+    >
+      <!--加载路由-->
+      <router-view/>
+    </n-config-provider>
+  </n-message-provider>
+
 </template>
 
 
