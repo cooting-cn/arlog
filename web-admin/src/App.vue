@@ -23,7 +23,7 @@ const naiveThemeOverrides = {
       :locale="zhCN"
       :theme-overrides="naiveThemeOverrides"
   >
-
+    <!--加载路由-->
     <router-view/>
   </n-config-provider>
 </template>

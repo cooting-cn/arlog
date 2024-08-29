@@ -8,7 +8,7 @@ import {NaiveUiResolver} from 'unplugin-vue-components/resolvers'
 
 // 引入Unocss
 import Unocss from 'unocss/vite';
-import {presetUno, presetAttributify, presetIcons} from 'unocss'
+import {presetAttributify, presetIcons, presetUno} from 'unocss'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,6 +19,7 @@ export default defineConfig({
                 presetUno(),
                 presetAttributify(),
                 presetIcons()],
+
         }),
         AutoImport({
             imports: [
