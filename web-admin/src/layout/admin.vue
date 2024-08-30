@@ -1,28 +1,34 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-  <div class="wh-full flex">
-    <aside
-        :class="collapsed ? 'w-64' : 'w-220'"
-        border-r="1px solid light_border dark:dark_border"
-        class="flex-col flex-shrink-0 transition-width-300"
-    >
-      <h1>66666666</h1>
-    </aside>
+  <n-layout class="h-80%" has-sider>
+    <n-layout-sider>
+      菜单
+    </n-layout-sider>
 
-    <article class="w-0 flex-col flex-1">
-      <h1>66666666</h1>
-      <router-view></router-view>
-    </article>
-  </div>
+    <n-layout>
+      <n-layout-header class="h-5% ">导航</n-layout-header>
 
+      <n-layout-content class="h-50%" content-style="padding: 24px;">
+        内容
+        <!--加载路由-->
+        <RouterView/>
+
+      </n-layout-content>
+
+      <n-layout-footer class="h-5%">底下导航</n-layout-footer>
+
+    </n-layout>
+
+  </n-layout>
 
 </template>
 
 <style scoped>
-.collapsed {
-  width: 64px;
+
+
+.n-layout-content {
+  background-color: #f2f2f2;
+
 }
 </style>
