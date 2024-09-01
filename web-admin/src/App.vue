@@ -1,5 +1,6 @@
 <script setup>
 import {RouterView} from 'vue-router'
+import {dateZhCN, zhCN} from "naive-ui";
 /*调整主题颜色*/
 const naiveThemeOverrides = {
   common: {
@@ -16,21 +17,21 @@ const naiveThemeOverrides = {
 
 
 <template>
-  <n-message-provider>
 
-    <!--设置全局属性主题配置  -->
-    <n-config-provider
-        :date-locale="dateZhCN"
-        :locale="zhCN"
-        :theme-overrides="naiveThemeOverrides"
-        class="h-full w-full"
-    >
+
+  <!--设置全局属性主题配置  -->
+  <n-config-provider
+      :date-locale="dateZhCN"
+      :locale="zhCN"
+      :theme-overrides="naiveThemeOverrides"
+      class="h-full w-full"
+  >
+    <n-message-provider>
       <!--公共添加页面-->
       <RouterView/>
+    </n-message-provider>
+  </n-config-provider>
 
-    </n-config-provider>
-
-  </n-message-provider>
 
 </template>
 

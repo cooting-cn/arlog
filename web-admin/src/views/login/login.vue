@@ -53,12 +53,10 @@ function login() {
 
 
   <div
-      class=" flex justify-center items-center h-screen bg-no-repeat bg-bottom bg-contain bg-[url(@/assets/images/login-background.png)]">
-
+      class=" flex justify-center items-center min-h-screen bg-no-repeat bg-bottom bg-contain bg-[url(@/assets/images/login-background.png)]">
 
     <!--登录框-->
-    <n-card class=" w-400px h-350px  shadow-md " hoverable style="border-radius: 12px;">
-
+    <div class=" w-400px h-350px p-20 shadow-md bg-[#FFFFFFFF]" style="border-radius: 12px;">
 
       <h2 class="flex items-center justify-center text-center text-30 text-[#767474ff] font-normal">
         <img alt="" class="mr-3 h-55" src="@/assets/images/arlog.webp">
@@ -149,7 +147,7 @@ function login() {
         </a>
 
       </div>
-    </n-card>
+    </div>
   </div>
 
 
