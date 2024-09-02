@@ -1,9 +1,26 @@
 <script setup>
 
-import {NIcon} from "naive-ui";
+
+import {RouterLink} from "vue-router";
 
 
 const menuOptions = [
+  {
+    label: () => h(
+        RouterLink,
+        {
+          to: {
+            name: "user",
+            params: {
+              lang: "zh-CN"
+            }
+          }
+        },
+        {default: () => "回家"}
+    ),
+    key: "go-back-home",
+    icon: () => h('i', {class: 'i-ep-user'}),
+  },
   {
     label: "且听风吟",
     key: "hear-the-wind-sing",
