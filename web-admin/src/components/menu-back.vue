@@ -6,9 +6,6 @@ const route = useRoute()
 
 const activeKey = computed(() => route.name)
 
-function ope(key, item) {
-  console.log(key, item)
-}
 
 const menuOptions = [
   {
@@ -155,13 +152,11 @@ const menuOptions = [
 
 
   <n-menu
+
       :options="menuOptions"
       :value="activeKey"
       accordion
-
-      @update:value="ope"
-      @update:expanded-keys="ope"
-  />  <!--测试点击一级菜单 和 多级菜单的回调函数-->
+  />
 
 
 </template>

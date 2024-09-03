@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import blogStore from "@/stores/arlog.js";
 
 
-const router = createRouter({
+const index = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
@@ -27,10 +27,50 @@ const router = createRouter({
                     /*后台的首页*/
                     path: '',
                     name: 'home',
-
                     component: () => import('@/views/admin/home.vue')
                 },
-
+                {
+                    /*文章页面*/
+                    path: 'article',
+                    name: 'article',
+                    component: () => import('@/views/admin/article.vue')
+                },
+                {
+                    /*标签页面*/
+                    path: 'tag',
+                    name: 'tag',
+                    component: () => import('@/views/admin/tag.vue')
+                },
+                {
+                    /*分类页面*/
+                    path: 'sort',
+                    name: 'sort',
+                    component: () => import('@/views/admin/sort.vue')
+                },
+                {
+                    /*图片页面*/
+                    path: 'jpg',
+                    name: 'jpg',
+                    component: () => import('@/views/admin/jpg.vue')
+                },
+                {
+                    /*留言页面*/
+                    path: 'message',
+                    name: 'message',
+                    component: () => import('@/views/admin/message.vue')
+                },
+                {
+                    /*ai页面*/
+                    path: 'ai',
+                    name: 'ai',
+                    component: () => import('@/views/admin/ai.vue')
+                },
+                {
+                    /*角色页面*/
+                    path: 'role',
+                    name: 'role',
+                    component: () => import('@/views/admin/role.vue')
+                },
                 {
                     /*后台的用户页面*/
                     path: 'user',
@@ -42,7 +82,7 @@ const router = createRouter({
     ]
 })
 /*判断是否登录*/
-router.beforeEach((to, from, next) => {
+index.beforeEach((to, from, next) => {
     /*获取本地token*/
     const authStore = blogStore()
 
@@ -61,4 +101,4 @@ router.beforeEach((to, from, next) => {
     }
 });
 
-export default router
+export default index

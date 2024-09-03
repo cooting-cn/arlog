@@ -23,7 +23,7 @@ export default defineConfig({
         }),
         AutoImport({
             imports: [
-                'vue',
+                'vue', 'vue-router',
                 {
                     'naive-ui': [
                         'useDialog',
@@ -32,7 +32,8 @@ export default defineConfig({
                         'useLoadingBar'
                     ]
                 }
-            ]
+            ],
+            dts: false,
         }),
         Components({
             resolvers: [NaiveUiResolver()]

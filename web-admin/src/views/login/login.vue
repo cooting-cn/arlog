@@ -2,7 +2,7 @@
 import {useMessage} from "naive-ui";
 import blogStore from "@/stores/arlog.js";
 import api from "@/api/api.js";
-import router from "@/router/index.js";
+import index from "@/router/index.js";
 /*创建消息提示对象*/
 const msg = useMessage()
 /*声明本地持久化st*/
@@ -33,7 +33,7 @@ function login() {
         // 显示成功消息
         msg.success(res.data.data.user.username + "登录成功")
         /*跳转到后台*/
-        router.push("admin")
+        index.push("admin")
         break
         /*登录成功*/
       case 203:
