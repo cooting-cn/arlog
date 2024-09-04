@@ -27,6 +27,7 @@ const index = createRouter({
                     /*后台的首页*/
                     path: '',
                     name: 'home',
+
                     component: () => import('@/views/admin/home.vue')
                 },
                 {
