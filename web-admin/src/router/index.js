@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import blogStore from "@/stores/arlog.js";
 
 
-const index = createRouter({
+const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
@@ -78,12 +78,18 @@ const index = createRouter({
                     name: 'user',
                     component: () => import('@/views/admin/user.vue')
                 },
+                {
+                    /*用户资料*/
+                    path: 'profile',
+                    name: 'profile',
+                    component: () => import('@/views/admin/profile.vue')
+                },
             ]
         },
     ]
 })
 /*判断是否登录*/
-index.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {
     /*获取本地token*/
     const authStore = blogStore()
 
@@ -102,4 +108,4 @@ index.beforeEach((to, from, next) => {
     }
 });
 
-export default index
+export default router

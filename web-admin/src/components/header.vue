@@ -2,14 +2,26 @@
 
 import {useRoute} from "vue-router";
 import {useFullscreen} from '@vueuse/core'
+import blogStore from "@/stores/arlog.js";
+import router from "@/router/index.js";
 
+
+/*全屏 功能*/
 const {isFullscreen, toggle} = useFullscreen()
+
+/*面包屑 获取当前路由*/
 const route = useRoute()
 const activeKey = computed(() => route.name)
 
+/*打开链接*/
 function handleLinkClick(link) {
   window.open(link)
 }
+
+/*获取当前用户*/
+/*声明本地持久化st*/
+const st = blogStore()
+
 
 const options = [
   {
@@ -28,6 +40,41 @@ const options = [
     icon: () => h('i', {class: 'i-ep-switch-button'})
   }
 ]
+
+
+const roleSelectRef = ref(null)
+
+function handleSelect(key) {
+  switch (key) {
+    case 'profile':
+      router.push('/admin/profile')
+      break
+    case 'toggleRole':
+      roleSelectRef.value?.open({
+        onOk() {
+          location.reload()
+        },
+      })
+      break
+    case 'logout':
+      $dialog.confirm({
+        title: '提示',
+        type: 'info',
+        content: '确认退出？',
+        async confirm() {
+          try {
+            await api.logout()
+          } catch (error) {
+            console.error(error)
+          }
+          authStore.logout()
+          $message.success('已退出登录')
+        },
+      })
+      break
+  }
+}
+
 
 </script>
 
@@ -100,10 +147,18 @@ const options = [
     </div>
     <!--个人资料区域   -->
     <div class=" mr-16">
-      <n-dropdown :options="options">
-        <n-tag :bordered="false">
-          用户资料
-        </n-tag>
+
+      <n-dropdown :options="options" @select="handleSelect">
+        <div class="flex cursor-pointer items-center">
+          <n-avatar :size="48" round src="https://tg-image.com/file/b13dfda09561bf4318933.jpg"/>
+          <div class="ml-12 flex flex-col ">
+
+            <span class="text-20 opacity-70 text-center h-25px">{{ st.user }}</span>
+
+            <span class="text-12 opacity-50 self-center text-center ">[超级管理员]</span>
+
+          </div>
+        </div>
       </n-dropdown>
     </div>
 

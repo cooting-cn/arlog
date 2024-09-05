@@ -28,12 +28,11 @@ import Header from "@/components/header.vue";
         <Header/>
       </div>
 
+      <!--实际网页内容-->
+      <div class=" w-100% h-100% p-13">
 
-      <div class="h-95% min-h-95% ">
-        <h1>
-          内容
-          <router-view></router-view>
-        </h1>
+        <router-view></router-view>
+
       </div>
 
 

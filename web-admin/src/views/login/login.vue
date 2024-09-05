@@ -2,7 +2,7 @@
 import {useMessage} from "naive-ui";
 import blogStore from "@/stores/arlog.js";
 import api from "@/api/api.js";
-import index from "@/router/index.js";
+import router from "@/router/index.js";
 /*创建消息提示对象*/
 const msg = useMessage()
 /*声明本地持久化st*/
@@ -33,7 +33,7 @@ function login() {
         // 显示成功消息
         msg.success(res.data.data.user.username + "登录成功")
         /*跳转到后台*/
-        index.push("admin")
+        router.push("admin")
         break
         /*登录成功*/
       case 203:
@@ -117,7 +117,7 @@ function login() {
       </div>
 
       <!--三方图标登录-->
-      <div class="mt-20 flex  justify-center gap-25">
+      <div class="mt-20 flex  justify-center gap-25 opacity-70">
         <n-icon class="i-simple-icons-gitee " size="35"/>
         <n-icon class="i-simple-icons-tencentqq " size="35"/>
         <n-icon class="i-simple-icons-wechat " size="35"/>
