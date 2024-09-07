@@ -22,7 +22,7 @@ function handleLinkClick(link) {
 /*声明本地持久化st*/
 const st = blogStore()
 
-
+/*右上角头像菜单*/
 const options = [
   {
     label: "用户资料",
@@ -41,36 +41,37 @@ const options = [
   }
 ]
 
+/*编辑资料弹出变量*/
+const showModal = ref(false)
 
-const roleSelectRef = ref(null)
-
+/*菜单点击选项功能*/
 function handleSelect(key) {
   switch (key) {
     case 'profile':
       router.push('/admin/profile')
       break
-    case 'toggleRole':
-      roleSelectRef.value?.open({
-        onOk() {
-          location.reload()
-        },
-      })
+    case 'editProfile':
+      showModal.value = true
       break
     case 'logout':
-      $dialog.confirm({
-        title: '提示',
-        type: 'info',
-        content: '确认退出？',
-        async confirm() {
-          try {
-            await api.logout()
-          } catch (error) {
-            console.error(error)
-          }
-          authStore.logout()
-          $message.success('已退出登录')
+
+      console.log("开始脱出")
+      $dialog.warning({
+        title: "用户注销！",
+        content: "你确定退出？",
+        positiveText: "确定",
+        negativeText: "取消",
+        onPositiveClick: () => {
+
+          st.token = ""
+          $message.warning(st.user + "已经注销")
+          location.reload()
         },
+        onNegativeClick: () => {
+          $message.success("取消");
+        }
       })
+
       break
   }
 }
@@ -113,7 +114,7 @@ function handleSelect(key) {
       <n-popover trigger="hover">
         <template #trigger>
           <n-icon class="i-simple-icons-gitee " size="25"
-                  @click="handleLinkClick('https://github.com/zclzone/vue-naive-admin/tree/2.x')"/>
+                  @click="handleLinkClick('https://gitee.com/cooting/arlog')"/>
         </template>
         跳转gitee
       </n-popover>
@@ -121,7 +122,7 @@ function handleSelect(key) {
       <n-popover trigger="hover">
         <template #trigger>
           <n-icon class="i-simple-icons-github " size="25"
-                  @click="handleLinkClick('https://github.com/zclzone/vue-naive-admin/tree/2.x')"/>
+                  @click="handleLinkClick('https://gitee.com/cooting/arlog')"/>
         </template>
         跳转github
       </n-popover>
@@ -129,7 +130,7 @@ function handleSelect(key) {
       <n-popover trigger="hover">
         <template #trigger>
           <n-icon class="i-simple-icons-tencentqq " size="25"
-                  @click="handleLinkClick('https://github.com/zclzone/vue-naive-admin/tree/2.x')"/>
+                  @click="handleLinkClick('https://gitee.com/cooting/arlog')"/>
         </template>
         联系QQ
       </n-popover>
@@ -138,13 +139,14 @@ function handleSelect(key) {
       <n-popover trigger="hover">
         <template #trigger>
           <n-icon class="i-simple-icons-wechat" size="25"
-                  @click="handleLinkClick('https://github.com/zclzone/vue-naive-admin/tree/2.x')"/>
+                  @click="handleLinkClick('https://gitee.com/cooting/arlog')"/>
         </template>
         联系微信
       </n-popover>
 
 
     </div>
+
     <!--个人资料区域   -->
     <div class=" mr-16">
 
@@ -164,6 +166,27 @@ function handleSelect(key) {
 
 
   </div>
+
+  <!--动态弹出框-->
+  <n-modal v-model:show="showModal">
+    <n-card
+        :bordered="false"
+        aria-modal="true"
+        role="dialog"
+        size="huge"
+        style="width: 600px"
+        title="模态框"
+    >
+      <template #header-extra>
+        噢！
+      </template>
+      内容
+      <template #footer>
+        尾部
+      </template>
+    </n-card>
+  </n-modal>
+
 
 </template>
 <style scoped>

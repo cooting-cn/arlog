@@ -1,10 +1,8 @@
 <script setup>
-import {useMessage} from "naive-ui";
 import blogStore from "@/stores/arlog.js";
 import api from "@/api/api.js";
 import router from "@/router/index.js";
-/*创建消息提示对象*/
-const msg = useMessage()
+
 /*声明本地持久化st*/
 const st = blogStore()
 /*创建登录用户变量*/
@@ -18,11 +16,15 @@ function login() {
   /*打印当前请求域名*/
   //console.log(window.location.origin)
   // 显示加载中的消息
-  msg.loading("正在验证", {duration: 50e3})
+  window.$message.loading("正在验证", {
+    key: 'loadingMessage',  // 唯一的 key
+    duration: 50e3          // 消息将持续 50 秒
+  })
 
   api.postLogin(logInfo).then(res => {
     // 无论成功还是失败，都会执行
-    msg.destroyAll()
+    window.$message.destroy("loadingMessage")
+    
     switch (res.data.code) {
         /*登录成功*/
       case 200:
@@ -31,19 +33,12 @@ function login() {
         /*存储登录的用户名*/
         st.user = res.data.data.user.username
         // 显示成功消息
-        msg.success(res.data.data.user.username + "登录成功")
+        window.$message.success(res.data.data.user.username + "登录成功")
         /*跳转到后台*/
         router.push("admin")
         break
         /*登录成功*/
-      case 203:
-        // 显示消息
-        msg.error(res.data.msg)
-        break
-      case 204:
-        // 显示消息
-        msg.error(res.data.msg)
-        break
+
     }
   })
 }
