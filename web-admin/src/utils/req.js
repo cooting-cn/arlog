@@ -19,7 +19,7 @@ const req = axios.create(
 /*添加请求token*/
 /*所有post请求添加成json格式*/
 req.interceptors.request.use((config) => {
-    
+
         config.headers['Authorization'] = st.token
 
         if (config.method === 'POST') {
@@ -34,12 +34,17 @@ req.interceptors.request.use((config) => {
 // 响应拦截器：统一处理错误响应
 // 添加响应拦截器
 req.interceptors.response.use(res => {
+
         // 对响应数据做点什么
         const data = res.data
+        // 访问成功 清理 之前的请求
+        $message.destroy("loadingMessage")
         switch (data.code) {
 
             case 203:
                 // 显示消息
+                // 无论成功还是失败，都会执行
+
                 window.$message.warning(data.msg)
                 break
             case 204:

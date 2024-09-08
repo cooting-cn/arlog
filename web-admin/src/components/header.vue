@@ -54,8 +54,6 @@ function handleSelect(key) {
       showModal.value = true
       break
     case 'logout':
-
-      console.log("开始脱出")
       $dialog.warning({
         title: "用户注销！",
         content: "你确定退出？",
@@ -65,16 +63,26 @@ function handleSelect(key) {
 
           st.token = ""
           $message.warning(st.user + "已经注销")
-          location.reload()
+          router.push('/login')
+
         },
         onNegativeClick: () => {
-          $message.success("取消");
+          $message.success("取消")
         }
       })
 
       break
   }
 }
+
+
+const formValue = ref({
+  user: {
+    name: "",
+    age: ""
+  },
+  phone: ""
+})
 
 
 </script>
@@ -174,12 +182,28 @@ function handleSelect(key) {
         aria-modal="true"
         role="dialog"
         size="huge"
-        style="width: 600px"
-        title="模态框"
+        style="width: 500px"
+        title="修改资料"
     >
-      <template #header-extra>
-        噢！
-      </template>
+      <n-form ref="formRef" :model="formValue" label-placement="left">
+        <n-form-item
+            label="姓名"
+            label-align="left"
+            path="user.name"
+        >
+          <n-input v-model:value="formValue.user.name" placeholder="输入姓名"/>
+        </n-form-item>
+
+        <n-form-item label="年龄" path="user.age">
+          <n-input v-model:value="formValue.user.age" placeholder="输入年龄"/>
+        </n-form-item>
+
+        <n-form-item label="电话号码" path="user.phone">
+          <n-input v-model:value="formValue.phone" placeholder="电话号码"/>
+        </n-form-item>
+
+      </n-form>
+
       内容
       <template #footer>
         尾部

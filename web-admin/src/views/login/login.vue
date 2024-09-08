@@ -15,16 +15,14 @@ const logInfo = reactive({
 function login() {
   /*打印当前请求域名*/
   //console.log(window.location.origin)
+
   // 显示加载中的消息
-  window.$message.loading("正在验证", {
+  $message.loading("正在验证", {
     key: 'loadingMessage',  // 唯一的 key
     duration: 50e3          // 消息将持续 50 秒
   })
-
   api.postLogin(logInfo).then(res => {
-    // 无论成功还是失败，都会执行
-    window.$message.destroy("loadingMessage")
-    
+
     switch (res.data.code) {
         /*登录成功*/
       case 200:
@@ -33,7 +31,7 @@ function login() {
         /*存储登录的用户名*/
         st.user = res.data.data.user.username
         // 显示成功消息
-        window.$message.success(res.data.data.user.username + "登录成功")
+        $message.success(res.data.data.user.username + "登录成功")
         /*跳转到后台*/
         router.push("admin")
         break
