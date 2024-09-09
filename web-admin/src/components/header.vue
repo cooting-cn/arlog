@@ -198,13 +198,12 @@ const formValue = ref({
           <n-input v-model:value="formValue.user.age" placeholder="输入年龄"/>
         </n-form-item>
 
-        <n-form-item label="电话号码" path="user.phone">
+        <n-form-item label="电话" path="user.phone">
           <n-input v-model:value="formValue.phone" placeholder="电话号码"/>
         </n-form-item>
 
       </n-form>
 
-      内容
       <template #footer>
         尾部
       </template>
