@@ -3,63 +3,68 @@
 /*声明本地持久化st*/
 import blogStore from "@/stores/arlog.js";
 
-import {use} from "echarts/core";
-import {CanvasRenderer} from "echarts/renderers";
-import {PieChart} from "echarts/charts";
-import {LegendComponent, TitleComponent, TooltipComponent} from "echarts/components";
-import VChart, {THEME_KEY} from "vue-echarts";
-import {provide, ref} from "vue";
 
-use([
-  CanvasRenderer,
-  PieChart,
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent
-]);
+const st = blogStore()
+/*-------添加视图-------*/
+import VChart from "vue-echarts"
+/*按需引入*/
+import {use} from 'echarts/core'
+import {PieChart} from 'echarts/charts'
+import {TooltipComponent, LegendComponent} from 'echarts/components'
+import {CanvasRenderer} from 'echarts/renderers'
 
-provide(THEME_KEY, "dark");
+use([TooltipComponent, LegendComponent, PieChart, CanvasRenderer])
 
-const option = ref({
-  title: {
-    text: "Traffic Sources",
-    left: "center"
-  },
+
+const option = {
   tooltip: {
-    trigger: "item",
-    formatter: "{a} <br/>{b} : {c} ({d}%)"
+    trigger: 'item',
+    formatter: '{b}: {d}%' // 只在提示框中显示数据项名称和百分比
   },
   legend: {
-    orient: "vertical",
-    left: "left",
-    data: ["Direct", "Email", "Ad Networks", "Video Ads", "Search Engines"]
+    top: '5%',
+    left: 'center',
+    textStyle: {
+      fontSize: 14,
+      color: '#333' // 设置图例文本颜色
+    }
   },
   series: [
     {
-      name: "Traffic Sources",
-      type: "pie",
-      radius: "55%",
-      center: ["50%", "60%"],
-      data: [
-        {value: 335, name: "Direct"},
-        {value: 310, name: "Email"},
-        {value: 234, name: "Ad Networks"},
-        {value: 135, name: "Video Ads"},
-        {value: 1548, name: "Search Engines"}
-      ],
+      name: 'Access From',
+      type: 'pie',
+      radius: ['40%', '70%'],
+      avoidLabelOverlap: true, // 避免标签重叠
+      itemStyle: {
+        borderRadius: 10,
+        borderColor: '#fff',
+        borderWidth: 4
+      },
+      label: {
+        show: false,
+        position: 'center'
+      },
       emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: "rgba(0, 0, 0, 0.5)"
+        label: {
+          show: true,
+          fontSize: 30,
+          fontWeight: 'bold',
+         
         }
-      }
+      },
+      labelLine: {
+        show: false
+      },
+      data: [
+        {value: 20, name: 'vue3'},
+        {value: 30, name: 'go'},
+        {value: 10, name: 'nodejs'},
+        {value: 10, name: 'shell'},
+        {value: 30, name: 'gin'}
+      ]
     }
   ]
-});
-/*---------------------------------*/
-
-const st = blogStore()
+}
 </script>
 
 <template>
@@ -202,7 +207,6 @@ const st = blogStore()
     </n-card>
 
     <n-card class="ml-12 w-50%" segmented title="🛠️ 技术栈">
-
       <v-chart :option="option" class="chart"/>
     </n-card>
   </div>
