@@ -10,33 +10,32 @@ import {use} from 'echarts/core'
 import {PieChart} from 'echarts/charts'
 import {TooltipComponent, LegendComponent} from 'echarts/components'
 import {CanvasRenderer} from 'echarts/renderers'
+import api from "@/api/api.js";
 
 
 use([TooltipComponent, LegendComponent, PieChart, CanvasRenderer])
 
 
-let languages = [
-  {"language": "Vue", "color": "#41b883", "percent": 46.8}
-
-]
+/*定义空数据*/
 let echartsData = ref([])
 
+/*定义自动执行函数*/
 function lg() {
-  languages = [
-    {"language": "Vue", "color": "#41b883", "percent": 46.8},
-    {"language": "Go", "color": "#00ADD8", "percent": 34.5},
-    {"language": "JavaScript", "color": "#f1e05a", "percent": 16.3},
-    {"language": "CSS", "color": "#563d7c", "percent": 0.9},
-    {"language": "Dockerfile", "color": "#384d54", "percent": 0.7},
-    {"language": "Other", "color": "#EDEDED", "percent": 0.8}
-  ]
-  echartsData.value = languages.map(lang => ({
-    value: lang.percent,   // 将 percent 作为 value
-    name: lang.language    // 将 language 作为 name
-  }))
-  console.log(echartsData.value)
+  /*获取gitee的参数*/
+  api.getCode().then(res => {
+
+    /*转换成想要的map*/
+    echartsData.value = res.data.data.languages.map(lang => ({
+      value: lang.percent,   // 将 percent 作为 value
+      name: lang.language    // 将 language 作为 name
+    }))
+
+  })
+
+
 }
 
+/*自动执行*/
 onMounted(lg)
 
 

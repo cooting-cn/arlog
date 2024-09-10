@@ -7,6 +7,9 @@ const api = {
     postLogin(data) {
         return req.post(base.login, data)
     },
+    getCode() {
+        return req.get(base.getcode)
+    }
 }
 
 export default api
