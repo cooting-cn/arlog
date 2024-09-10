@@ -11,33 +11,33 @@ import {PieChart} from 'echarts/charts'
 import {TooltipComponent, LegendComponent} from 'echarts/components'
 import {CanvasRenderer} from 'echarts/renderers'
 
-import req from "@/utils/req.js"
-
 
 use([TooltipComponent, LegendComponent, PieChart, CanvasRenderer])
 
-const languages = [
-  {"language": "Vue", "color": "#41b883", "percent": 46.8},
-]
-const echartsData = ref()
 
-// 响应式数据
+let languages = [
+  {"language": "Vue", "color": "#41b883", "percent": 46.8}
+
+]
+let echartsData = ref([])
+
 function lg() {
-  req.get('https://gitee.com/api/v5/repos/cooting/arlog/languages').then((res) => {
-    languages.value = res.data.languages
-    echartsData.value = ref(languages.map(lang => ({
-      value: lang.percent,   // 将 percent 作为 value
-      name: lang.language    // 将 language 作为 name
-    })))
-  })
+  languages = [
+    {"language": "Vue", "color": "#41b883", "percent": 46.8},
+    {"language": "Go", "color": "#00ADD8", "percent": 34.5},
+    {"language": "JavaScript", "color": "#f1e05a", "percent": 16.3},
+    {"language": "CSS", "color": "#563d7c", "percent": 0.9},
+    {"language": "Dockerfile", "color": "#384d54", "percent": 0.7},
+    {"language": "Other", "color": "#EDEDED", "percent": 0.8}
+  ]
+  echartsData.value = languages.map(lang => ({
+    value: lang.percent,   // 将 percent 作为 value
+    name: lang.language    // 将 language 作为 name
+  }))
+  console.log(echartsData.value)
 }
 
 onMounted(lg)
-
-// 使用 map() 方法进行转换，并创建响应式变量
-
-
-console.log(echartsData.value)
 
 
 const option = ref({

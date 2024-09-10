@@ -76,8 +76,9 @@ func WebInit() {
 		})
 		//用户登录
 
-		home.POST("login", v2.Login) //三方登录code处理
-		home.POST("otp", api.Otp)    //otp 验证登录
+		home.POST("login", v2.Login)     //三方登录code处理
+		home.POST("otp", api.Otp)        //otp 验证登录
+		home.GET("getcode", api.GetCode) //otp 验证登录
 		//搜索模块
 		//文章模块
 		//分类模块
