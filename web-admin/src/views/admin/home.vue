@@ -3,42 +3,62 @@
 /*声明本地持久化st*/
 import blogStore from "@/stores/arlog.js";
 
-
 const st = blogStore()
-/*-------添加视图-------*/
+/*扇形图*/
 import VChart from "vue-echarts"
-/*按需引入*/
 import {use} from 'echarts/core'
 import {PieChart} from 'echarts/charts'
 import {TooltipComponent, LegendComponent} from 'echarts/components'
 import {CanvasRenderer} from 'echarts/renderers'
 
+import req from "@/utils/req.js"
+
+
 use([TooltipComponent, LegendComponent, PieChart, CanvasRenderer])
 
+const languages = [
+  {"language": "Vue", "color": "#41b883", "percent": 46.8},
+]
 
-const option = {
+// 响应式数据
+function lg() {
+  req.get('https://gitee.com/api/v5/repos/cooting/arlog/languages').then((res) => {
+    languages.value = res.data.languages
+  })
+}
+
+onMounted(lg)
+
+// 使用 map() 方法进行转换，并创建响应式变量
+const echartsData = ref(languages.map(lang => ({
+  value: lang.percent,   // 将 percent 作为 value
+  name: lang.language    // 将 language 作为 name
+})))
+
+console.log(echartsData.value)
+
+
+const option = ref({
   tooltip: {
     trigger: 'item',
-    formatter: '{b}: {d}%' // 只在提示框中显示数据项名称和百分比
+    formatter: '{b}: {d}%'
   },
   legend: {
-    top: '5%',
-    left: 'center',
-    textStyle: {
-      fontSize: 14,
-      color: '#333' // 设置图例文本颜色
-    }
+
+    left: 'center'
   },
   series: [
     {
       name: 'Access From',
       type: 'pie',
-      radius: ['40%', '70%'],
-      avoidLabelOverlap: true, // 避免标签重叠
+      radius: ['30%', '85%'],
+      avoidLabelOverlap: false,
+      center: ['50%', '55%'],
+
       itemStyle: {
         borderRadius: 10,
         borderColor: '#fff',
-        borderWidth: 4
+        borderWidth: 2
       },
       label: {
         show: false,
@@ -47,67 +67,52 @@ const option = {
       emphasis: {
         label: {
           show: true,
-          fontSize: 30,
-          fontWeight: 'bold',
-         
+          fontSize: 20,
+          fontWeight: 'bold'
         }
       },
       labelLine: {
         show: false
       },
-      data: [
-        {value: 20, name: 'vue3'},
-        {value: 30, name: 'go'},
-        {value: 10, name: 'nodejs'},
-        {value: 10, name: 'shell'},
-        {value: 30, name: 'gin'}
-      ]
+      data: echartsData
     }
   ]
-}
+})
+
+
 </script>
 
 <template>
   <div class="flex">
-    <n-card class="min-w-200 w-30%">
+    <!-- 登录头像用户   -->
+    <n-card class="min-w-200 w-30% h-150px">
       <div class="flex items-center">
-        <n-avatar :size="60" class="flex-shrink-0" round src="https://tg-image.com/file/b13dfda09561bf4318933.jpg"/>
+        <n-avatar :size="60" round src="https://tg-image.com/file/b13dfda09561bf4318933.jpg"/>
         <div class="ml-20 flex-col">
-            <span class="text-20 opacity-80">
+            <span class="text-20 opacity-90">
               Hello,{{ st.user }}
             </span>
 
         </div>
       </div>
 
-      <p class="mt-28 text-14 opacity-60">
-        一个人几乎可以在任何他怀有无限热忱的事情上成功。
+      <p class="mt-15 text-14 opacity-80">
+        如果你累了,可以停下脚步歇息,但是不要眷恋松弛的状态。
       </p>
-      <p class="mt-12 text-right text-12 opacity-40">
-        —— 查尔斯·史考伯
-      </p>
-    </n-card>
-    <n-card class="ml-12 w-70%" title="✨ 欢迎使用 Vue Naive Admin 2.0">
-      <template #header-extra>
-        <a
-            class="text-14 text-primary text-highlight hover:underline hover:opacity-80"
-            href="https://isme.top"
-            target="_blank"
-            @click.prevent="message?.info('官网正在火速开发中...')"
-        >
-          isme.top
-        </a>
-      </template>
 
-      <p class="opacity-60">
-        这是一款极简风格的后台管理模板，包含前后端解决方案，前端使用 Vite + Vue3 + Pinia +
-        Unocss，后端使用 Nestjs + TypeOrm +
-        MySql，简单易用，赏心悦目，历经十几次重构和细节打磨，诚意满满！！
+    </n-card>
+
+    <!-- 右边欢迎  -->
+    <n-card class="ml-12 w-70% h-150px" title="✨ 欢迎使用  arlog">
+
+      <p class="opacity-80">
+        这是一款极简风格博客的后台管理，包含前后端解决方案，前端使用 Vite + Vue3 + Pinia +
+        Unocss，后端使用Golang + Gin + MySql 8，简单易用，赏心悦目，诚意满满！！
       </p>
       <footer class="mt-12 flex items-center justify-end">
         <n-button
             ghost
-            href="https://isme.top"
+            href="https://arlog.cn"
             tag="a"
             target="__blank"
             type="primary"
@@ -116,7 +121,7 @@ const option = {
         </n-button>
         <n-button
             class="ml-12"
-            href="https://github.com/zclzone/vue-naive-admin/tree/2.x"
+            href="https://arlog.cn"
             tag="a"
             target="__blank"
             type="primary"
@@ -126,13 +131,15 @@ const option = {
       </footer>
     </n-card>
   </div>
-  <div class="mt-12 flex">
-    <n-card class="w-50%" segmented title="💯 特性">
-      <template #header-extra>
-        <span class="opacity-90 text-highlight">👏 历经十几次重构和细节打磨</span>
-      </template>
 
-      <ul class="opacity-90">
+  <!-- 特性介绍模块 -->
+  <div class="mt-12 flex h-300px">
+    <n-card class="w-50%" segmented>
+
+      <span class="text-20 ">
+              💯 特性
+            </span>
+      <ul class="opacity-90 mt-15">
         <li class="py-4">
           🆒 使用
           <b>Vue3</b>
@@ -147,74 +154,51 @@ const option = {
           ，优雅、轻量、易用
         </li>
         <li class="py-4">
-          🤹 使用主流的
-          <span class="text-highlight">iconify + unocss</span>
-          图标方案，支持自定义图标，支持动态渲染
-        </li>
-        <li class="py-4">
           🎨 使用 Naive UI，
           <span class="text-highlight">极致简洁的代码风格和清爽的页面设计</span>
           ，审美在线，主题轻松定制
         </li>
-        <li class="py-4">
-          👏 先进且易于理解的文件结构设计，多个模块之间
-          <b>零耦合</b>
-          ，单个业务模块删除不影响其他模块
-        </li>
+
         <li class="py-4">
           🚀
           <span class="text-highlight">扁平化路由</span>
-          设计，每一个组件都可以是一个页面，告别多级路由 KeepAlive 难实现问题
-        </li>
-
-        <li class="py-4">
-          🍒
-          <span class="text-highlight">基于权限动态生成路由</span>
-          ，无需额外定义路由，
-          <span class="text-highlight">403和404可区分</span>
-          ，而不是无权限也跳404
-        </li>
-        <li class="py-4">
-          🔐 基于Redis集成
-          <span class="text-highlight">无感刷新</span>
-          ，用户登录态可控，安全与体验缺一不可
+          设计，每一个组件都可以是一个页面
         </li>
         <li class="py-4">
           ✨ 基于 Naive UI 封装
           <span class="text-highlight">message</span>
           全局工具方法，支持批量提醒，支持跨页面共享实例
         </li>
-        <li class="py-4">
-          ⚡️ 基于 Naive UI 封装常用的业务组件，包含
-          <span class="text-highlight">Page</span>
-          组件、
-          <span class="text-highlight">CRUD</span>
-          表格组件及
-          <span class="text-highlight">Modal</span>
-          组件，减少大量重复性工作
-        </li>
+
       </ul>
 
       <n-divider class="mb-0! mt-12!">
         <p class="text-14 opacity-60">
           👉点击
           <b class="mx-2 transition hover:text-primary">
-            <a href="https://isme.top" target="_blank">更多</a>
+            <a href="https://arlog.cn" target="_blank">更多</a>
           </b>
           查看更多实用功能，持续开发中...
         </p>
       </n-divider>
     </n-card>
 
-    <n-card class="ml-12 w-50%" segmented title="🛠️ 技术栈">
-      <v-chart :option="option" class="chart"/>
+
+    <n-card class="ml-12 w-50%">
+
+      <span class="text-20  ">
+               🛠️ 技术栈
+            </span>
+      <v-chart :option="option" class="mt--20px h-100% w-100%"/>
     </n-card>
   </div>
 
-  <n-card class="mt-12" segmented title="⚡️ 趋势">
-    <div class="h-400">
+  <n-card class="mt-12 h-400px">
+      <span class="text-20  ">
+               ⚡️ 趋势
+            </span>
 
-    </div>
+
   </n-card>
 
 </template>

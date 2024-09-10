@@ -1,5 +1,4 @@
-import {computed, ref} from "vue";
-import {createDiscreteApi, darkTheme, lightTheme} from "naive-ui";
+import {createDiscreteApi, darkTheme, lightTheme} from "naive-ui"
 
 
 const themeRef = ref("light");
