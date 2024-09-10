@@ -19,21 +19,23 @@ use([TooltipComponent, LegendComponent, PieChart, CanvasRenderer])
 const languages = [
   {"language": "Vue", "color": "#41b883", "percent": 46.8},
 ]
+const echartsData = ref()
 
 // 响应式数据
 function lg() {
   req.get('https://gitee.com/api/v5/repos/cooting/arlog/languages').then((res) => {
     languages.value = res.data.languages
+    echartsData.value = ref(languages.map(lang => ({
+      value: lang.percent,   // 将 percent 作为 value
+      name: lang.language    // 将 language 作为 name
+    })))
   })
 }
 
 onMounted(lg)
 
 // 使用 map() 方法进行转换，并创建响应式变量
-const echartsData = ref(languages.map(lang => ({
-  value: lang.percent,   // 将 percent 作为 value
-  name: lang.language    // 将 language 作为 name
-})))
+
 
 console.log(echartsData.value)
 
