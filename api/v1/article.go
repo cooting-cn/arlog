@@ -56,7 +56,7 @@ func GetArt(c *gin.Context) {
 	formData, code, total := service.GetArt(pageSize, page)
 	res.Ask(c, code, gin.H{
 		"total": total,
-		"data":  formData,
+		"arts":  formData,
 	})
 
 }

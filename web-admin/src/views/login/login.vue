@@ -27,11 +27,11 @@ function login() {
         /*登录成功*/
       case 200:
         /*存储token到本地*/
-        st.token = res.data.data.token
+        st.token = res.data.result.token
         /*存储登录的用户名*/
-        st.user = res.data.data.user.username
+        st.user = res.data.result.user.username
         // 显示成功消息
-        $message.success(res.data.data.user.username + "登录成功")
+        $message.success(res.data.result.user.username + "登录成功")
         /*跳转到后台*/
         router.push("admin")
         break

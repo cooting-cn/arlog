@@ -25,7 +25,7 @@ function lg() {
   api.getCode().then(res => {
 
     /*转换成想要的map*/
-    echartsData.value = res.data.data.languages.map(lang => ({
+    echartsData.value = res.data.result.languages.map(lang => ({
       value: lang.percent,   // 将 percent 作为 value
       name: lang.language    // 将 language 作为 name
     }))
