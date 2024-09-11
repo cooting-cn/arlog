@@ -45,8 +45,11 @@ const option = ref({
     formatter: '{b}: {d}%'
   },
   legend: {
-
-    left: 'center'
+    type: 'scroll',
+    orient: 'vertical',
+    left: 10,
+    top: 'center',
+    bottom: 20,
   },
   series: [
     {
@@ -62,8 +65,11 @@ const option = ref({
         borderWidth: 2
       },
       label: {
-        show: false,
-        position: 'center'
+        show: true,  // 启用标签
+        formatter: '{b}: {d}%',  // 在标签中显示名称和百分比
+        position: 'outside',  // 标签显示在扇形图外部
+        fontSize: 15,
+
       },
       emphasis: {
         label: {
@@ -75,6 +81,7 @@ const option = ref({
       labelLine: {
         show: false
       },
+
       data: echartsData
     }
   ]
