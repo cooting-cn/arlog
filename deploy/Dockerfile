@@ -19,4 +19,5 @@ COPY config.json  /
 #CMD tini -g -- /arlog
 CMD /arlog
 
-# 打包命令  docker-slim build --http-probe=false --dockerfile deploy/Dockerfile --tag shanhy/spring-native-demo.slim:0.0.3 .
+# 打包命令  docker-slim build  --dockerfile deploy/Dockerfile --continue-after=all  --tag shanhy/spring-native-demo.slim:0.0.4 .
+# 打包命令 docker build  -t  shanhy/spring-native-demo.slim:0.0.5 -f deploy/Dockerfile .

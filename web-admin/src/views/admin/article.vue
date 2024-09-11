@@ -7,28 +7,34 @@ const sendMail = (rowData) => {
   $message.info(`send mail to ${rowData.name}`);
 };
 
-const createColumns = () => [
+const columns = [
   {
     title: "文章",
-    key: "wz"
+    key: "title"
   },
   {
     title: "描述",
-    key: "mx"
+    key: "desc"
   },
   {
     title: "分类",
-    key: "fl"
+    key: "sortId"
   },
   {
     title: "标签",
     key: "tags",
-
   },
   {
     title: "发布",
-    key: "fb",
-
+    key: "open",
+  },
+  {
+    title: "创建时间",
+    key: "created_at",
+  },
+  {
+    title: "更新时间",
+    key: "updated_at",
   },
   {
     title: "Action",
@@ -48,32 +54,122 @@ const createColumns = () => [
 
 const data = [
   {
-    id: 0,
-    wz: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"]
+    "id": 15,
+    "title": "维特鸭肉儒雅而银行",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:31",
+    "updated_at": "2024-09-11 20:47:31"
   },
   {
-    id: 1,
-    wz: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["wow"]
+    "id": 14,
+    "title": "再多发几张的房间内",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:30",
+    "updated_at": "2024-09-11 20:47:30"
   },
   {
-    id: 2,
-    wz: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"]
+    "id": 13,
+    "title": "而大家的祝福九年",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:29",
+    "updated_at": "2024-09-11 20:47:29"
+  },
+  {
+    "id": 12,
+    "title": "的做法是竞争的机会呢",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:29",
+    "updated_at": "2024-09-11 20:47:29"
+  },
+  {
+    "id": 11,
+    "title": "年纪大加拿大这种年纪",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:28",
+    "updated_at": "2024-09-11 20:47:28"
+  },
+  {
+    "id": 10,
+    "title": "自动返回指定回复",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:28",
+    "updated_at": "2024-09-11 20:47:28"
+  },
+  {
+    "id": 9,
+    "title": "撒旦发生的故事",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:27",
+    "updated_at": "2024-09-11 20:47:27"
+  },
+  {
+    "id": 8,
+    "title": "委任为通过现场公布v",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:27",
+    "updated_at": "2024-09-11 20:47:27"
+  },
+  {
+    "id": 7,
+    "title": "是豆腐干山豆根",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:26",
+    "updated_at": "2024-09-11 20:47:26"
+  },
+  {
+    "id": 6,
+    "title": "的回复你你你",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:26",
+    "updated_at": "2024-09-11 20:47:26"
   }
-];
+]
 
-const columns = createColumns();
+
 const pagination = {
-  pageSize: 10
-};
+  pageSize: 20,
+  page-sizes: 20
+}
 
 
 </script>
