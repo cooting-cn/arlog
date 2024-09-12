@@ -9,6 +9,10 @@ const sendMail = (rowData) => {
 
 const columns = [
   {
+    title: "ID",
+    key: "id"
+  },
+  {
     title: "文章",
     key: "title"
   },
@@ -162,14 +166,73 @@ const data = [
     "sortId": 0,
     "created_at": "2024-09-11 20:47:26",
     "updated_at": "2024-09-11 20:47:26"
+  },
+  {
+    "id": 5,
+    "title": "和顺丰单号",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:25",
+    "updated_at": "2024-09-11 20:47:25"
+  },
+  {
+    "id": 4,
+    "title": "哈佛大学",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:24",
+    "updated_at": "2024-09-11 20:47:24"
+  },
+  {
+    "id": 3,
+    "title": "撒旦发射点",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:24",
+    "updated_at": "2024-09-11 20:47:24"
+  },
+  {
+    "id": 2,
+    "title": "发的供货商的风格和",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:23",
+    "updated_at": "2024-09-11 20:47:23"
+  },
+  {
+    "id": 1,
+    "title": "啊实打实的",
+    "desc": "123123123",
+    "content": "123333333333333333",
+    "img": "",
+    "open": 0,
+    "sortId": 0,
+    "created_at": "2024-09-11 20:47:22",
+    "updated_at": "2024-09-11 20:47:22"
   }
 ]
 
 
-const pagination = {
-  pageSize: 20,
-  page-sizes: 20
-}
+const pagination = reactive({
+  page: 1,  // 当前页
+  pageCount: 1,  // 总页数
+  pageSize: 12,  // 每页显示的记录数
+  prefix({itemCount}) {  // 自定义前缀文本
+    return `总数 ${itemCount}`  // 显示 "Total is {itemCount}."
+  }
+})
 
 
 </script>
@@ -223,6 +286,7 @@ const pagination = {
     <!-- 数据表单   -->
     <n-data-table :columns="columns"
                   :data="data"
+
                   :pagination="pagination"
                   class="mt-30"
                   size="large"
