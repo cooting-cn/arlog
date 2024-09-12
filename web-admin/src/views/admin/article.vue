@@ -4,45 +4,64 @@ import {NButton} from "naive-ui"
 
 
 const sendMail = (rowData) => {
-  $message.info(`send mail to ${rowData.name}`);
+  $message.info(`send mail to ${rowData.id}`);
 };
 
 const columns = [
   {
     title: "ID",
-    key: "id"
+    key: "id",
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center'  // 表头居中对齐
   },
   {
     title: "文章",
-    key: "title"
+    key: "title",
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center'  // 表头居中对齐
+
   },
   {
     title: "描述",
-    key: "desc"
+    key: "desc",
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center',  // 表头居中对齐
   },
   {
     title: "分类",
-    key: "sortId"
+    key: "sortId",
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center',  // 表头居中对齐
   },
   {
     title: "标签",
     key: "tags",
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center',  // 表头居中对齐
   },
   {
     title: "发布",
     key: "open",
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center'  // 表头居中对齐
   },
   {
     title: "创建时间",
     key: "created_at",
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center',  // 表头居中对齐
   },
   {
     title: "更新时间",
     key: "updated_at",
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center',  // 表头居中对齐
   },
   {
     title: "Action",
     key: "actions",
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center',  // 表头居中对齐
     render(row) {
       return h(
           NButton,
@@ -284,12 +303,13 @@ const pagination = reactive({
     </n-card>
 
     <!-- 数据表单   -->
-    <n-data-table :columns="columns"
-                  :data="data"
+    <n-data-table
+        :columns="columns"
+        :data="data"
+        :pagination="pagination"
 
-                  :pagination="pagination"
-                  class="mt-30"
-                  size="large"
+        class="mt-30 "
+        size="large"
     />
 
   </n-card>
