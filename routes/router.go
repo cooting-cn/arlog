@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"arlog/api"
 	v1 "arlog/api/v1"
 	v2 "arlog/api/v2"
 	"arlog/core"
@@ -35,8 +34,8 @@ func WebInit() {
 
 		})
 
-		admin.GET("get-otp", api.GetOtp)    //获取otp
-		admin.POST("bind-otp", api.BindOtp) //绑定otp
+		admin.GET("get-otp", v2.GetOtp)    //获取otp
+		admin.POST("bind-otp", v2.BindOtp) //绑定otp
 
 		admin.POST("add-user", v1.AddUser)       //添加用户
 		admin.POST("del-user", v1.DelUser)       //删除用户
@@ -76,9 +75,9 @@ func WebInit() {
 		})
 		//用户登录
 
-		home.POST("login", v2.Login)      //三方登录code处理
-		home.POST("otp", api.Otp)         //otp 验证登录
-		home.GET("get-code", api.GetCode) //otp 验证登录
+		home.POST("login", v2.Login)     //三方登录code处理
+		home.POST("otp", v2.Otp)         //otp 验证登录
+		home.GET("get-code", v2.GetCode) //otp 验证登录
 		//搜索模块
 		//文章模块
 		//分类模块

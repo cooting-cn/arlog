@@ -13,9 +13,9 @@ const sendMail = (rowData) => {
 
 /*分页设置*/
 const pagination = reactive({
-  page: 2,  // 当前页
+  page: 1,  // 当前页
   pageSize: 12,  // 每页显示的记录数
-  pageCount: 8,  // 总页数
+  pageCount: null,  // 总页数
   prefix({itemCount}) {  // 自定义前缀文本
     return `总数 ${itemCount}`  // 显示 "Total is {itemCount}."
   }
@@ -23,11 +23,19 @@ const pagination = reactive({
 
 /*自动触发*/
 onMounted(() => {
-  api.getArt(params).then(res => {
+  /*加载数据中*/
+  loading.value = true
 
+  $loadingBar.start()
+  /*获取数据*/
+  api.getArt(params).then(res => {
+    /*获取数据*/
     data.value = res.data.result.arts
+    /*获取数据条数*/
     pagination.itemCount = res.data.result.total
-    console.log(data.value)
+    /*关闭加载*/
+    $loadingBar.finish()
+    loading.value = false
   })
 
 })
@@ -41,18 +49,23 @@ const params = reactive({
 function page(currentPage) {
 
   if (!loading.value) {
+    $loadingBar.start()
     loading.value = true
     /*显示的当前页*/
     pagination.page = currentPage
     /*请求的后端的参数页*/
-    params.value.page = currentPage
+
+    params.page = currentPage
+
     /*请求文章*/
     api.getArt(params).then(res => {
       data.value = res.data.result.arts
-      console.log(data.value)
+      /*关闭加载*/
+      $loadingBar.finish()
+      loading.value = false
     })
 
-    loading.value = false  // 请求完成后取消加载状态
+
   }
 }
 
