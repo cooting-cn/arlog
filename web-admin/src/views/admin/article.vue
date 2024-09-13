@@ -1,6 +1,7 @@
 <script setup>
 import {h} from "vue"
 import {NButton} from "naive-ui"
+import api from "@/api/api.js";
 
 /*数据加载变量*/
 const loading = ref(false)
@@ -22,16 +23,34 @@ const pagination = reactive({
 
 /*自动触发*/
 onMounted(() => {
-  pagination.itemCount = 60
+  api.getArt(params).then(res => {
+
+    data.value = res.data.result.arts
+    pagination.itemCount = res.data.result.total
+    console.log(data.value)
+  })
+
 })
 
+// 查询参数
+const params = reactive({
+  page: 1,
+})
 
 /*触发分页*/
 function page(currentPage) {
 
   if (!loading.value) {
     loading.value = true
+    /*显示的当前页*/
     pagination.page = currentPage
+    /*请求的后端的参数页*/
+    params.value.page = currentPage
+    /*请求文章*/
+    api.getArt(params).then(res => {
+      data.value = res.data.result.arts
+      console.log(data.value)
+    })
 
     loading.value = false  // 请求完成后取消加载状态
   }
@@ -106,139 +125,7 @@ const columns = ref([
   }
 ])
 /*列表数据*/
-const data = ref([
-  {
-    "id": 12,
-    "title": "委任为通过现场公布v",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:27",
-    "updated_at": "2024-09-11 20:47:27"
-  },
-  {
-    "id": 11,
-    "title": "是豆腐干山豆根",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:26",
-    "updated_at": "2024-09-11 20:47:26"
-  }, {
-    "id": 10,
-    "title": "委任为通过现场公布v",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:27",
-    "updated_at": "2024-09-11 20:47:27"
-  },
-  {
-    "id": 9,
-    "title": "是豆腐干山豆根",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:26",
-    "updated_at": "2024-09-11 20:47:26"
-  },
-  {
-    "id": 8,
-    "title": "委任为通过现场公布v",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:27",
-    "updated_at": "2024-09-11 20:47:27"
-  },
-  {
-    "id": 7,
-    "title": "是豆腐干山豆根",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:26",
-    "updated_at": "2024-09-11 20:47:26"
-  },
-  {
-    "id": 6,
-    "title": "的回复你你你",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:26",
-    "updated_at": "2024-09-11 20:47:26"
-  },
-  {
-    "id": 5,
-    "title": "和顺丰单号",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:25",
-    "updated_at": "2024-09-11 20:47:25"
-  },
-  {
-    "id": 4,
-    "title": "哈佛大学",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:24",
-    "updated_at": "2024-09-11 20:47:24"
-  },
-  {
-    "id": 3,
-    "title": "撒旦发射点",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:24",
-    "updated_at": "2024-09-11 20:47:24"
-  },
-  {
-    "id": 2,
-    "title": "发的供货商的风格和",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:23",
-    "updated_at": "2024-09-11 20:47:23"
-  },
-  {
-    "id": 1,
-    "title": "啊实打实的",
-    "desc": "123123123",
-    "content": "123333333333333333",
-    "img": "",
-    "open": 0,
-    "sortId": 0,
-    "created_at": "2024-09-11 20:47:22",
-    "updated_at": "2024-09-11 20:47:22"
-  }
-])
+const data = ref([])
 
 
 </script>

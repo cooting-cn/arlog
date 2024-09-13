@@ -20,7 +20,7 @@ const req = axios.create(
 /*所有post请求添加成json格式*/
 req.interceptors.request.use((config) => {
 
-        config.headers['Authorization'] = st.token
+        config.headers['token'] = st.token
 
         if (config.method === 'POST') {
             config.headers.append('Content-Type', 'application/json');
@@ -51,6 +51,11 @@ req.interceptors.response.use(res => {
                 // 显示消息
                 window.$message.warning(data.msg)
                 break
+            case 205:
+                // 显示消息
+                window.$message.warning(data.msg)
+                break
+
         }
         return res
     }, error => Promise.reject(error)

@@ -8,8 +8,12 @@ const api = {
         return req.post(base.login, data)
     },
     getCode() {
-        return req.get(base.getcode)
+        return req.get(base.getCode)
+    },
+    getArt(data) {
+        return req.get(base.getArt, {params: data})
     }
 }
+
 
 export default api
