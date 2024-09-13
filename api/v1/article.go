@@ -50,7 +50,7 @@ func GetArt(c *gin.Context) {
 	case pageSize > 100:
 		pageSize = 100
 	case pageSize <= 0:
-		pageSize = 10
+		pageSize = 12
 	}
 
 	formData, code, total := service.GetArt(pageSize, page)
