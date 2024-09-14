@@ -1,6 +1,6 @@
 <script setup>
 import {h} from "vue"
-import {NButton} from "naive-ui"
+import {NButton, NSwitch} from "naive-ui"
 import api from "@/api/api.js";
 
 /*数据加载变量*/
@@ -69,6 +69,27 @@ function page(currentPage) {
   }
 }
 
+
+// 处理开关状态改变
+function handleOpenChange(row) {
+  // 更新行数据中的 open 状态
+  row.open = row.open === 0 ? 1 : 0;
+
+  // 调用服务器 API 更新状态
+  console.log(`Updating open status of item with ID ${row.id} to ${row.open}`)
+
+}
+
+// 自定义轨道样式
+function railStyle({checked}) {
+  const style = {};
+  if (checked) {
+    style.background = "rgba(104,94,191,0.8)";
+
+  }
+  return style;
+}
+
 /*导航分类设置*/
 const columns = ref([
   {
@@ -97,16 +118,23 @@ const columns = ref([
     titleAlign: 'center',  // 表头居中对齐
   },
   {
-    title: "标签",
-    key: "tags",
-    align: 'center',      // 列内文本居中对齐
-    titleAlign: 'center',  // 表头居中对齐
-  },
-  {
     title: "发布",
     key: "open",
     align: 'center',      // 列内文本居中对齐
-    titleAlign: 'center'  // 表头居中对齐
+    titleAlign: 'center',  // 表头居中对齐
+    render(row) {
+      return h(
+          NSwitch,
+          {
+            checkedValue: 1,
+            uncheckedValue: 0,
+            value: row.open,
+            size: "medium",
+            railStyle: railStyle,
+            onClick: () => handleOpenChange(row)
+          }
+      )
+    }
   },
   {
     title: "创建时间",
@@ -121,7 +149,7 @@ const columns = ref([
     titleAlign: 'center',  // 表头居中对齐
   },
   {
-    title: "Action",
+    title: "功能",
     key: "actions",
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
@@ -132,7 +160,7 @@ const columns = ref([
             size: "small",
             onClick: () => sendMail(row)
           },
-          {default: () => "Send Email"}
+          {default: () => "编辑"}
       )
     }
   }
