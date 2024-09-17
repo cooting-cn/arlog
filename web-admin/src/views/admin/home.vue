@@ -21,15 +21,19 @@ let echartsData = ref([])
 
 /*定义自动执行函数*/
 function lg() {
+  $loadingBar.start()
   /*获取gitee的参数*/
   api.getCode().then(res => {
 
     /*转换成想要的map*/
     echartsData.value = res.data.result.languages.map(lang => ({
+
       value: lang.percent,   // 将 percent 作为 value
       name: lang.language    // 将 language 作为 name
-    }))
 
+    }))
+    /*关闭加载*/
+    $loadingBar.finish()
   })
 
 

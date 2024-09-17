@@ -84,7 +84,7 @@ function handleOpenChange(row) {
 function railStyle({checked}) {
   const style = {};
   if (checked) {
-    style.background = "rgba(104,94,191,0.8)";
+    style.background = "rgba(190,150,229,0.8)";
 
   }
   return style;
@@ -92,6 +92,10 @@ function railStyle({checked}) {
 
 /*导航分类设置*/
 const columns = ref([
+  {
+    type: "selection"
+
+  },
   {
     title: "ID",
     key: "id",
@@ -167,21 +171,33 @@ const columns = ref([
 ])
 /*列表数据*/
 const data = ref([])
+/*选中行*/
 
+// 响应式数据
+const checkedRowKeys = ref([])
 
+// 行的唯一标识
+const rowKey = (row) => row.id
+// 处理行选中
+// 处理行选中事件
+const handleCheck = (rowKeys) => {
+  checkedRowKeys.value = rowKeys
+  console.log(checkedRowKeys)
+
+}
 </script>
 
 <template>
 
 
-  <n-card class="h-100% ">
+  <n-card class="h-100% min-w-900">
     <!--  筛选 添加框  -->
     <n-card class="h-80px " style="background-color: rgba(250, 250, 252, 1)">
       <n-space class="items-center">
         <div class="w-300px">
           <n-space class="items-center">
             <span>文章</span>
-            <n-input placeholder="文章" type="text"/>
+            <n-input id="name" name="name" placeholder="文章" type="text"/>
           </n-space>
 
         </div>
@@ -189,7 +205,7 @@ const data = ref([])
         <div class="w-300px">
           <n-space class="items-center">
             <span>分类</span>
-            <n-input placeholder="分类" type="text"/>
+            <n-input id="name" name="name" placeholder="分类" type="text"/>
           </n-space>
 
         </div>
@@ -223,12 +239,13 @@ const data = ref([])
         :data=data
         :loading=loading
         :pagination=pagination
+        :row-key="rowKey"
         class="mt-20"
         min-height="690"
         remote
         size="large"
         @update:page="page"
-
+        @update:checked-row-keys="handleCheck"
     />
 
   </n-card>
