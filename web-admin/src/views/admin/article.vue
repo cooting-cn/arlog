@@ -185,51 +185,68 @@ const handleCheck = (rowKeys) => {
   console.log(checkedRowKeys)
 
 }
+
+/*删除按钮*/
+function DeleteArticle() {
+
+  if (checkedRowKeys.value.length > 0) {
+    console.log("有数据")
+    
+    return
+  }
+  console.log("0数据" + checkedRowKeys.value.length)
+}
 </script>
 
 <template>
 
 
-  <n-card class="h-100% min-w-900">
+  <n-card class="h-100% min-w-900 ">
     <!--  筛选 添加框  -->
-    <n-card class="h-80px " style="background-color: rgba(250, 250, 252, 1)">
-      <n-space class="items-center">
-        <div class="w-300px">
-          <n-space class="items-center">
+    <n-card class="flex " style="background-color: rgba(250, 250, 252, 1)">
+      <div class="flex items-center w-100%">
+        <div class="w-500px ">
+          <n-space class="items-center ">
             <span>文章</span>
-            <n-input id="name" name="name" placeholder="文章" type="text"/>
+            <n-input id="name" name="name" placeholder="文章" style="min-width: 250px" type="text"/>
+            <n-button type="tertiary">
+              搜索
+              <template #icon>
+                <n-icon
+                    :class="'i-ep-search'"
+                    size="15px"
+                />
+              </template>
+            </n-button>
           </n-space>
 
         </div>
 
-        <div class="w-300px">
-          <n-space class="items-center">
-            <span>分类</span>
-            <n-input id="name" name="name" placeholder="分类" type="text"/>
-          </n-space>
 
+        <div class="absolute right-0 mr-20">
+
+          <n-button class="mr-16" type="primary">
+            新增
+            <template #icon>
+              <n-icon
+                  :class="'i-ep-select'"
+                  size="15px"
+              />
+            </template>
+          </n-button>
+
+          <n-button color="#DD5D68CC" @click="DeleteArticle">
+            删除
+            <template #icon>
+              <n-icon
+                  :class="'i-ep-semi-select'"
+                  size="15px"
+              />
+            </template>
+          </n-button>
         </div>
 
-
-        <n-button type="tertiary">
-          搜索
-          <template #icon>
-            <n-icon
-                :class="'i-ep-search'"
-                size="15px"
-            />
-          </template>
-        </n-button>
-        <n-button type="primary">
-          新增
-          <template #icon>
-            <n-icon
-                :class="'i-ep-plus'"
-                size="15px"
-            />
-          </template>
-        </n-button>
-      </n-space>
+      </div>
 
     </n-card>
 
