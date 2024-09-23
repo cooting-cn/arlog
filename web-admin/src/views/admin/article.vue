@@ -182,20 +182,57 @@ const rowKey = (row) => row.id
 // 处理行选中事件
 const handleCheck = (rowKeys) => {
   checkedRowKeys.value = rowKeys
-  console.log(checkedRowKeys)
+
 
 }
 
-/*删除按钮*/
+/*删除文章按钮*/
+const delArt = reactive({
+  id: []
+})
+
 function DeleteArticle() {
 
   if (checkedRowKeys.value.length > 0) {
-    console.log("有数据")
-    
+    delArt.id = checkedRowKeys.value
+    api.deleteArt(delArt).then(
+        res => {
+          // 删除成功
+          $message.success("删除成功" + res.data.msg)
+          // 重新当前页面数据
+          page(pagination.page)
+        }
+    )
+
+
     return
   }
-  console.log("0数据" + checkedRowKeys.value.length)
+
+  $message.error("没有删除的数据" + checkedRowKeys.value.length)
+
 }
+
+/*搜索文章*/
+const seArt = reactive({
+  title: ""
+})
+
+function SearchArticle() {
+  // 获取搜索框中的值
+  $loadingBar.start()
+  api.searchArt(seArt).then(
+      res => {
+        //获取搜索的文章
+        data.value = res.data.result.arts
+        /*获取数据条数*/
+        pagination.itemCount = res.data.result.total
+        /*关闭加载*/
+        $loadingBar.finish()
+      }
+  )
+}
+
+
 </script>
 
 <template>
@@ -208,8 +245,8 @@ function DeleteArticle() {
         <div class="w-500px ">
           <n-space class="items-center ">
             <span>文章</span>
-            <n-input id="name" name="name" placeholder="文章" style="min-width: 250px" type="text"/>
-            <n-button type="tertiary">
+            <n-input v-model:value="seArt.title" placeholder="文章" style="min-width: 250px" type="text"/>
+            <n-button type="tertiary" @click="SearchArticle">
               搜索
               <template #icon>
                 <n-icon

@@ -31,9 +31,11 @@ func UpArticle(c *gin.Context) {
 
 // DelArticle 删除文章
 func DelArticle(c *gin.Context) {
-	var formData model.Article
+	var formData struct {
+		ID []int `json:"id"`
+	}
 	_ = c.ShouldBindJSON(&formData)
-	code := service.DelArt(formData.Id)
+	code := service.DelArt(formData.ID)
 	res.Ask(c, code, nil)
 }
 
@@ -59,4 +61,29 @@ func GetArt(c *gin.Context) {
 		"arts":  formData,
 	})
 
+}
+
+// SearchArt 搜索文章
+func SearchArt(c *gin.Context) {
+	var formData model.Article
+	_ = c.ShouldBindJSON(&formData)
+	//页数
+	page, _ := strconv.Atoi(c.Query("page"))
+	if page == 0 {
+		page = 1
+	}
+	//行数
+	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
+	switch {
+	case pageSize > 100:
+		pageSize = 100
+	case pageSize <= 0:
+		pageSize = 12
+	}
+
+	data, code, total := service.SearchArt(formData.Title, pageSize, page)
+	res.Ask(c, code, gin.H{
+		"total": total,
+		"arts":  data,
+	})
 }

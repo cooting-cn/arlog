@@ -46,6 +46,7 @@ func WebInit() {
 		admin.GET("get-art", v1.GetArt)      //查询所有文章
 		admin.POST("del-art", v1.DelArticle) //删除文章
 		admin.POST("up-art", v1.UpArticle)   //更新文章
+		admin.POST("sear-art", v1.SearchArt) //搜索文章
 
 		admin.POST("add-sort", v1.AddSort) //添加分类
 		admin.POST("del-sort", v1.DelSort) //删除分类

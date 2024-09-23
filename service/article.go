@@ -32,9 +32,9 @@ func GetArt(pageSize int, page int) ([]model.Article, int, int64) {
 }
 
 // DelArt 文章删除
-func DelArt(id int) int {
-	gorm.Db.Delete(&model.Article{}, id)
-	log.Info("文章删除成功影响行id：", id)
+func DelArt(ids []int) int {
+	gorm.Db.Delete(&model.Article{}, "id IN ?", ids)
+	log.Info("文章删除成功影响行id：", ids)
 	return 200
 }
 
@@ -45,4 +45,14 @@ func UpArt(art model.Article) int {
 
 	log.Info("更新成功，受影响的id", art.Id)
 	return 200
+}
+
+// SearchArt 搜索文章
+func SearchArt(keyword string, pageSize, page int) ([]model.Article, int, int64) {
+	var articleList []model.Article
+	var total int64
+	gorm.Db.Offset((page-1)*pageSize).Limit(pageSize).Where("title LIKE?", "%"+keyword+"%").Order("id desc").Find(&articleList).Count(&total)
+
+	log.Info("搜索文章：", keyword, total)
+	return articleList, 200, total
 }

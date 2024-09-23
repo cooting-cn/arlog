@@ -7,12 +7,34 @@ const api = {
     postLogin(data) {
         return req.post(base.login, data)
     },
+    /*查询gitee代码分析*/
     getCode() {
         return req.get(base.getCode)
     },
+    /*查询文章*/
     getArt(data) {
         return req.get(base.getArt, {params: data})
-    }
+    },
+    /*搜索文章*/
+    searchArt(data) {
+        return req.post(base.searchArt, data)
+    },
+    /*批量删除文章*/
+    deleteArt(data) {
+        return req.post(base.deleteArt, data)
+    },
+    /*创建文章*/
+    createArt(data) {
+        return req.post(base.addArt, data)
+    },
+    /*编辑文章*/
+    editArt(data) {
+        return req.post(base.editArt, data)
+    },
+    /*上传图片*/
+    uploadImage(data) {
+        return req.post(base.uploadImage, data)
+    },
 }
 
 
