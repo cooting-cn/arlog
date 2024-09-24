@@ -7,7 +7,8 @@ import '@/utils/message.js'
 import App from './App.vue'
 import router from './router/index.js'
 import piniaPersist from 'pinia-plugin-persist'
-import 'default-passive-events'
+/*import 'default-passive-events'*/
+
 
 const app = createApp(App)
 

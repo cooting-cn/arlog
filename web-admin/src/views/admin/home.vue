@@ -1,4 +1,5 @@
 <script setup>
+
 /*获取当前用户*/
 /*声明本地持久化st*/
 import blogStore from "@/stores/arlog.js";
@@ -13,7 +14,7 @@ import {CanvasRenderer} from 'echarts/renderers'
 import api from "@/api/api.js";
 
 
-use([TooltipComponent, LegendComponent, PieChart, CanvasRenderer])
+use([TooltipComponent, LegendComponent, PieChart, CanvasRenderer,])
 
 
 /*定义空数据*/
@@ -44,6 +45,8 @@ onMounted(lg)
 
 
 const option = ref({
+
+
   tooltip: {
     trigger: 'item',
     formatter: '{b}: {d}%'
@@ -68,6 +71,7 @@ const option = ref({
         borderColor: '#fff',
         borderWidth: 2
       },
+
       label: {
         show: true,  // 启用标签
         formatter: '{b}: {d}%',  // 在标签中显示名称和百分比
@@ -76,6 +80,7 @@ const option = ref({
 
       },
       emphasis: {
+
         label: {
           show: true,
           fontSize: 20,
@@ -85,7 +90,6 @@ const option = ref({
       labelLine: {
         show: false
       },
-
       data: echartsData
     }
   ]
@@ -202,6 +206,7 @@ const option = ref({
                🛠️ 技术栈
             </span>
       <v-chart :option="option" class="mt--20px h-100% w-100%"/>
+
     </n-card>
   </div>
 

@@ -54,6 +54,6 @@ func GetSort(c *gin.Context) {
 	formData, code, total := service.GetSortList(pageSize, page)
 	res.Ask(c, code, gin.H{
 		"total": total,
-		"data":  formData,
+		"sorts": formData,
 	})
 }

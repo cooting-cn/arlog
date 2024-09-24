@@ -2,6 +2,8 @@
 import {h} from "vue"
 import {NButton, NSwitch} from "naive-ui"
 import api from "@/api/api.js";
+import {MdEditor} from 'md-editor-v3'
+import 'md-editor-v3/lib/style.css'
 
 /*数据加载变量*/
 const loading = ref(false)
@@ -232,7 +234,33 @@ function SearchArticle() {
   )
 }
 
+/*新增文章*/
+const showModal = ref(false)
 
+function AddArt() {
+  showModal.value = true
+  api.getSort(params).then(
+      res => {
+        // 获取文章分类
+        songs.value = res.data.result.sorts
+        console.log(songs.value)
+      }
+  )
+
+}
+
+const formValue = ref(
+    {
+      title: "",
+      desc: "",
+      content: "填写内容",
+      img: "",
+      open: 0,
+      sortId: 0
+    })
+
+const value = ref(null)
+const songs = ref([])
 </script>
 
 <template>
@@ -245,7 +273,9 @@ function SearchArticle() {
         <div class="w-500px ">
           <n-space class="items-center ">
             <span>文章</span>
-            <n-input v-model:value="seArt.title" placeholder="文章" style="min-width: 250px" type="text"/>
+            <n-input v-model:value="seArt.title" :input-props="{ autocomplete: 'wz' ,id: 'wz'}" placeholder="文章"
+                     style="min-width: 250px"
+                     type="text"/>
             <n-button type="tertiary" @click="SearchArticle">
               搜索
               <template #icon>
@@ -262,7 +292,7 @@ function SearchArticle() {
 
         <div class="absolute right-0 mr-20">
 
-          <n-button class="mr-16" type="primary">
+          <n-button class="mr-16" type="primary" @click="AddArt">
             新增
             <template #icon>
               <n-icon
@@ -304,6 +334,55 @@ function SearchArticle() {
 
   </n-card>
 
+  <!--动态弹出框-->
+  <n-modal v-model:show="showModal">
+    <n-card
+        :bordered="false"
+        aria-modal="true"
+        class="w-50% min-w-900"
+        role="dialog"
+        size="huge"
+        title="新增文章"
+    >
+      <n-form :model="formValue" label-placement="left" label-width="auto">
+        <n-form-item label="文章名">
+          <n-input v-model:value="formValue.title" placeholder="文章名"/>
+        </n-form-item>
+
+        <n-form-item label="描述">
+          <n-input v-model:value="formValue.desc" :autosize="{
+          minRows: 1,
+          maxRows: 5,
+        }" placeholder="描述" type="textarea"/>
+        </n-form-item>
+
+        <n-form-item label="分类">
+          <n-radio-group v-model:value="formValue.sortId">
+            <n-space>
+              <n-radio v-for="song in songs" :key="song.id" :value="song.id">
+                {{ song.name }}
+              </n-radio>
+            </n-space>
+          </n-radio-group>
+        </n-form-item>
+
+        <n-form-item label="发布">
+          <n-switch v-model:value="formValue.open"
+                    :rail-style="railStyle"
+                    checked-value="1"
+                    unchecked-value="0"/>
+        </n-form-item>
+
+        <n-form-item label="内容">
+          <MdEditor v-model="formValue.content"/>
+        </n-form-item>
+      </n-form>
+
+      <template #footer>
+        尾部
+      </template>
+    </n-card>
+  </n-modal>
 </template>
 
 <style scoped>

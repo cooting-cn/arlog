@@ -35,6 +35,10 @@ const api = {
     uploadImage(data) {
         return req.post(base.uploadImage, data)
     },
+    /*查询分类*/
+    getSort(data) {
+        return req.get(base.getSort, {params: data})
+    }
 }
 
 

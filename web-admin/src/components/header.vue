@@ -188,7 +188,7 @@ const formValue = ref({
       <n-form ref="formRef" :model="formValue" label-placement="left">
         <n-form-item
             label="姓名"
-            label-align="left"
+
             path="user.name"
         >
           <n-input v-model:value="formValue.user.name" placeholder="输入姓名"/>
