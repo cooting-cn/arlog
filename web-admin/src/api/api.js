@@ -23,8 +23,8 @@ const api = {
     deleteArt(data) {
         return req.post(base.deleteArt, data)
     },
-    /*创建文章*/
-    createArt(data) {
+    /*添加文章*/
+    addArt(data) {
         return req.post(base.addArt, data)
     },
     /*编辑文章*/

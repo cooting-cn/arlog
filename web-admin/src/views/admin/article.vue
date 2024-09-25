@@ -7,10 +7,6 @@ import 'md-editor-v3/lib/style.css'
 
 /*数据加载变量*/
 const loading = ref(false)
-/*按钮触发函数*/
-const sendMail = (rowData) => {
-  $message.info(`send mail to ${rowData.id}`)
-}
 
 
 /*分页设置*/
@@ -29,6 +25,21 @@ onMounted(() => {
   loading.value = true
 
   $loadingBar.start()
+  /*查询分类*/
+  api.getSort(params).then(
+      res => {
+        // 获取文章分类
+        songs.value = res.data.result.sorts;
+
+        // 将分类数据转换为映射对象
+        categoryMap.value = songs.value.reduce((acc, cur) => {
+          acc[cur.id] = cur.name;
+          return acc;
+        }, {})
+
+      }
+  )
+
   /*获取数据*/
   api.getArt(params).then(res => {
     /*获取数据*/
@@ -92,11 +103,14 @@ function railStyle({checked}) {
   return style;
 }
 
+
+// 创建一个映射对象用于快速查找分类名称
+const categoryMap = ref({})
+
 /*导航分类设置*/
 const columns = ref([
   {
     type: "selection"
-
   },
   {
     title: "ID",
@@ -122,6 +136,9 @@ const columns = ref([
     key: "sortId",
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
+    render(row) {
+      return categoryMap.value[row.sortId] || '未知'
+    }
   },
   {
     title: "发布",
@@ -164,7 +181,7 @@ const columns = ref([
           NButton,
           {
             size: "small",
-            onClick: () => sendMail(row)
+            onClick: () => etArt(row)
           },
           {default: () => "编辑"}
       )
@@ -239,17 +256,9 @@ const showModal = ref(false)
 
 function AddArt() {
   showModal.value = true
-  api.getSort(params).then(
-      res => {
-        // 获取文章分类
-        songs.value = res.data.result.sorts
-        console.log(songs.value)
-      }
-  )
-
 }
 
-const formValue = ref(
+const formValue = reactive(
     {
       title: "",
       desc: "",
@@ -258,9 +267,33 @@ const formValue = ref(
       open: 0,
       sortId: 0
     })
-
-const value = ref(null)
+/*查询分类数组*/
 const songs = ref([])
+
+/*添加文章*/
+function addArt() {
+  api.addArt(formValue).then(
+      res => {
+        $message.info(res.data.msg)
+        // 重新当前页面数据
+        page(pagination.page)
+        //关闭添加框
+        showModal.value = false
+
+      }
+  )
+
+}
+
+/*编辑按钮*/
+const etArt = (rowData) => {
+  console.log(rowData)
+
+
+  $message.info(`send mail to ${rowData.valueOf()}`)
+}
+
+
 </script>
 
 <template>
@@ -342,7 +375,7 @@ const songs = ref([])
         class="w-50% min-w-900"
         role="dialog"
         size="huge"
-        title="新增文章"
+        title="文章"
     >
       <n-form :model="formValue" label-placement="left" label-width="auto">
         <n-form-item label="文章名">
@@ -368,9 +401,10 @@ const songs = ref([])
 
         <n-form-item label="发布">
           <n-switch v-model:value="formValue.open"
+                    :checked-value=1
                     :rail-style="railStyle"
-                    checked-value="1"
-                    unchecked-value="0"/>
+                    :unchecked-value=0
+          />
         </n-form-item>
 
         <n-form-item label="内容">
@@ -378,9 +412,13 @@ const songs = ref([])
         </n-form-item>
       </n-form>
 
-      <template #footer>
-        尾部
-      </template>
+
+      <div class="grid place-items-end ">
+        <n-button class="w-100" type="info" @click="addArt">
+          添加
+        </n-button>
+      </div>
+
     </n-card>
   </n-modal>
 </template>
