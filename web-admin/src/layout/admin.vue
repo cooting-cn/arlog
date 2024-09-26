@@ -30,8 +30,11 @@ import Header from "@/components/header.vue";
 
       <!--实际网页内容-->
       <div class=" w-100% h-100% p-13">
+        <n-card class="h-100% min-w-900 ">
+          <router-view></router-view>
 
-        <router-view></router-view>
+        </n-card>
+
 
       </div>
 

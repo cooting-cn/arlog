@@ -28,8 +28,8 @@ const api = {
         return req.post(base.addArt, data)
     },
     /*编辑文章*/
-    editArt(data) {
-        return req.post(base.editArt, data)
+    upArt(data) {
+        return req.post(base.upArt, data)
     },
     /*上传图片*/
     uploadImage(data) {

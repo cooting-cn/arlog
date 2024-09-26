@@ -13,7 +13,7 @@ const base = {
     /*批量删除文章*/
     deleteArt: "/api/v1/del-art",
     /*修改文章*/
-    editArt: "/api/v1/edit-art",
+    upArt: "/api/v1/up-art",
     /*添加文章*/
     addArt: "/api/v1/add-art",
     /*上传图片*/

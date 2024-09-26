@@ -83,16 +83,6 @@ function page(currentPage) {
 }
 
 
-// 处理开关状态改变
-function handleOpenChange(row) {
-  // 更新行数据中的 open 状态
-  row.open = row.open === 0 ? 1 : 0;
-
-  // 调用服务器 API 更新状态
-  console.log(`Updating open status of item with ID ${row.id} to ${row.open}`)
-
-}
-
 // 自定义轨道样式
 function railStyle({checked}) {
   const style = {};
@@ -256,126 +246,159 @@ const showModal = ref(false)
 
 function AddArt() {
   showModal.value = true
+  operationType.value = 'add'
 }
 
-const formValue = reactive(
+const formValue = ref(
     {
       title: "",
       desc: "",
       content: "填写内容",
       img: "",
       open: 0,
-      sortId: 0
+      sortId: 0,
+      id: null
     })
 /*查询分类数组*/
 const songs = ref([])
+/*判断添加编辑变量*/
+const operationType = ref('add')
 
-/*添加文章*/
+/*编辑和添加文章*/
 function addArt() {
-  api.addArt(formValue).then(
-      res => {
-        $message.info(res.data.msg)
-        // 重新当前页面数据
-        page(pagination.page)
-        //关闭添加框
-        showModal.value = false
 
-      }
-  )
+  if (operationType.value === 'add') {
+    //初始化多余数据
+    formValue.value.id = null
+    formValue.value.created_at = null
+    formValue.value.updated_at = null
+
+    api.addArt(formValue.value).then(
+        res => {
+          $message.success("添加成功" + res.data.msg)
+          // 重新当前页面数据
+          page(pagination.page)
+          //关闭添加框
+          showModal.value = false
+        }
+    )
+  } else {
+    api.upArt(formValue.value).then(
+        res => {
+          $message.success("编辑成功" + res.data.msg)
+          // 重新当前页面数据
+          page(pagination.page)
+          //关闭添加框
+          showModal.value = false
+        }
+    )
+  }
+
 
 }
 
 /*编辑按钮*/
 const etArt = (rowData) => {
-  console.log(rowData)
+  operationType.value = "update"
+  //开启弹窗
+  showModal.value = true
+  //赋值给动态表单
+  formValue.value = rowData
 
-
-  $message.info(`send mail to ${rowData.valueOf()}`)
 }
 
+// 处理发布按钮
+function handleOpenChange(row) {
+  // 更新行数据中的 open 状态
+  row.open = row.open === 0 ? 1 : 0;
+  //赋值给动态表单
+  formValue.value = row
 
+  // 调用服务器 API 更新状态
+  operationType.value = "update"
+  addArt()
+
+}
 </script>
 
 <template>
 
 
-  <n-card class="h-100% min-w-900 ">
-    <!--  筛选 添加框  -->
-    <n-card class="flex " style="background-color: rgba(250, 250, 252, 1)">
-      <div class="flex items-center w-100%">
-        <div class="w-500px ">
-          <n-space class="items-center ">
-            <span>文章</span>
-            <n-input v-model:value="seArt.title" :input-props="{ autocomplete: 'wz' ,id: 'wz'}" placeholder="文章"
-                     style="min-width: 250px"
-                     type="text"/>
-            <n-button type="tertiary" @click="SearchArticle">
-              搜索
-              <template #icon>
-                <n-icon
-                    :class="'i-ep-search'"
-                    size="15px"
-                />
-              </template>
-            </n-button>
-          </n-space>
-
-        </div>
-
-
-        <div class="absolute right-0 mr-20">
-
-          <n-button class="mr-16" type="primary" @click="AddArt">
-            新增
+  <!--  筛选 添加框  -->
+  <n-card class="flex " style="background-color: rgba(250, 250, 252, 1)">
+    <div class="flex items-center w-100%">
+      <div class="w-500px ">
+        <n-space class="items-center ">
+          <span>文章</span>
+          <n-input v-model:value="seArt.title" :input-props="{ autocomplete: 'wz' ,id: 'wz'}" placeholder="文章"
+                   style="min-width: 250px"
+                   type="text"/>
+          <n-button type="tertiary" @click="SearchArticle">
+            搜索
             <template #icon>
               <n-icon
-                  :class="'i-ep-select'"
+                  :class="'i-ep-search'"
                   size="15px"
               />
             </template>
           </n-button>
-
-          <n-button color="#DD5D68CC" @click="DeleteArticle">
-            删除
-            <template #icon>
-              <n-icon
-                  :class="'i-ep-semi-select'"
-                  size="15px"
-              />
-            </template>
-          </n-button>
-        </div>
+        </n-space>
 
       </div>
 
-    </n-card>
 
-    <!-- 数据表单   -->
-    <n-data-table
-        :columns=columns
-        :data=data
-        :loading=loading
-        :pagination=pagination
-        :row-key="rowKey"
-        class="mt-20"
-        min-height="690"
-        remote
-        size="large"
-        @update:page="page"
-        @update:checked-row-keys="handleCheck"
-    />
+      <div class="absolute right-0 mr-20">
+
+        <n-button class="mr-16" type="primary" @click="AddArt">
+          新增
+          <template #icon>
+            <n-icon
+                :class="'i-ep-select'"
+                size="15px"
+            />
+          </template>
+        </n-button>
+
+        <n-button color="#DD5D68CC" @click="DeleteArticle">
+          删除
+          <template #icon>
+            <n-icon
+                :class="'i-ep-semi-select'"
+                size="15px"
+            />
+          </template>
+        </n-button>
+      </div>
+
+    </div>
 
   </n-card>
+
+  <!-- 数据表单   -->
+  <n-data-table
+      :columns=columns
+      :data=data
+      :loading=loading
+      :pagination=pagination
+      :row-key="rowKey"
+      class="mt-20"
+      min-height="690"
+      remote
+      size="large"
+      @update:page="page"
+      @update:checked-row-keys="handleCheck"
+  />
+
 
   <!--动态弹出框-->
   <n-modal v-model:show="showModal">
     <n-card
         :bordered="false"
+        :title="operationType === 'add' ? '添加文章' : '修改文章'"
         aria-modal="true"
         class="w-50% min-w-900"
         role="dialog"
         size="huge"
-        title="文章"
     >
       <n-form :model="formValue" label-placement="left" label-width="auto">
         <n-form-item label="文章名">
@@ -415,7 +438,7 @@ const etArt = (rowData) => {
 
       <div class="grid place-items-end ">
         <n-button class="w-100" type="info" @click="addArt">
-          添加
+          {{ operationType === 'add' ? '添加' : '保存更改' }}
         </n-button>
       </div>
 
