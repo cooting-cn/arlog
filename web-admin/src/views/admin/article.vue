@@ -323,72 +323,72 @@ function handleOpenChange(row) {
 
 <template>
 
+  <n-card class="h-100% min-w-900 ">
+    <!--  筛选 添加框  -->
+    <n-card class="flex " style="background-color: rgba(250, 250, 252, 1)">
+      <div class="flex items-center w-100%">
+        <div class="w-500px ">
+          <n-space class="items-center ">
+            <span>文章</span>
+            <n-input v-model:value="seArt.title" :input-props="{ autocomplete: 'wz' ,id: 'wz'}" placeholder="文章"
+                     style="min-width: 250px"
+                     type="text"/>
+            <n-button type="tertiary" @click="SearchArticle">
+              搜索
+              <template #icon>
+                <n-icon
+                    :class="'i-ep-search'"
+                    size="15px"
+                />
+              </template>
+            </n-button>
+          </n-space>
 
-  <!--  筛选 添加框  -->
-  <n-card class="flex " style="background-color: rgba(250, 250, 252, 1)">
-    <div class="flex items-center w-100%">
-      <div class="w-500px ">
-        <n-space class="items-center ">
-          <span>文章</span>
-          <n-input v-model:value="seArt.title" :input-props="{ autocomplete: 'wz' ,id: 'wz'}" placeholder="文章"
-                   style="min-width: 250px"
-                   type="text"/>
-          <n-button type="tertiary" @click="SearchArticle">
-            搜索
+        </div>
+
+
+        <div class="absolute right-0 mr-20">
+
+          <n-button class="mr-16" type="primary" @click="AddArt">
+            新增
             <template #icon>
               <n-icon
-                  :class="'i-ep-search'"
+                  :class="'i-ep-select'"
                   size="15px"
               />
             </template>
           </n-button>
-        </n-space>
+
+          <n-button color="#DD5D68CC" @click="DeleteArticle">
+            删除
+            <template #icon>
+              <n-icon
+                  :class="'i-ep-semi-select'"
+                  size="15px"
+              />
+            </template>
+          </n-button>
+        </div>
 
       </div>
 
+    </n-card>
 
-      <div class="absolute right-0 mr-20">
-
-        <n-button class="mr-16" type="primary" @click="AddArt">
-          新增
-          <template #icon>
-            <n-icon
-                :class="'i-ep-select'"
-                size="15px"
-            />
-          </template>
-        </n-button>
-
-        <n-button color="#DD5D68CC" @click="DeleteArticle">
-          删除
-          <template #icon>
-            <n-icon
-                :class="'i-ep-semi-select'"
-                size="15px"
-            />
-          </template>
-        </n-button>
-      </div>
-
-    </div>
-
+    <!-- 数据表单   -->
+    <n-data-table
+        :columns=columns
+        :data=data
+        :loading=loading
+        :pagination=pagination
+        :row-key="rowKey"
+        class="mt-20"
+        min-height="690"
+        remote
+        size="large"
+        @update:page="page"
+        @update:checked-row-keys="handleCheck"
+    />
   </n-card>
-
-  <!-- 数据表单   -->
-  <n-data-table
-      :columns=columns
-      :data=data
-      :loading=loading
-      :pagination=pagination
-      :row-key="rowKey"
-      class="mt-20"
-      min-height="690"
-      remote
-      size="large"
-      @update:page="page"
-      @update:checked-row-keys="handleCheck"
-  />
-
 
   <!--动态弹出框-->
   <n-modal v-model:show="showModal">
