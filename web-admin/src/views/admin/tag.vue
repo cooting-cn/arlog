@@ -3,7 +3,11 @@
 </script>
 
 <template>
-  <h1>111111111</h1>
+  <n-card class="h-100% min-w-900 ">
+    <h1>111111111</h1>
+
+  </n-card>
+
 </template>
 
 <style scoped>
