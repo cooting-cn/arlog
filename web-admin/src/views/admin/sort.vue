@@ -74,9 +74,6 @@ function page(currentPage) {
 /*导航分类设置*/
 const columns = ref([
   {
-    type: "selection"
-  },
-  {
     title: "ID",
     key: "id",
     align: 'center',      // 列内文本居中对齐
@@ -114,7 +111,7 @@ const columns = ref([
             size: "small",
             onClick: () => etArt(row)
           },
-          {default: () => "编辑"}
+          {default: () => "删除"}
       )
     }
   }
@@ -126,15 +123,6 @@ const data = ref([])
 // 响应式数据
 const checkedRowKeys = ref([])
 
-// 行的唯一标识
-const rowKey = (row) => row.id
-// 处理行选中
-// 处理行选中事件
-const handleCheck = (rowKeys) => {
-  checkedRowKeys.value = rowKeys
-
-
-}
 
 /*删除文章按钮*/
 const delArt = reactive({
@@ -255,15 +243,7 @@ const etArt = (rowData) => {
             </template>
           </n-button>
 
-          <n-button color="#DD5D68CC" @click="DeleteArticle">
-            删除
-            <template #icon>
-              <n-icon
-                  :class="'i-ep-semi-select'"
-                  size="15px"
-              />
-            </template>
-          </n-button>
+
         </div>
 
       </div>
@@ -276,13 +256,13 @@ const etArt = (rowData) => {
         :data=data
         :loading=loading
         :pagination=pagination
-        :row-key="rowKey"
+
         class="mt-20"
         min-height="690"
         remote
         size="large"
         @update:page="page"
-        @update:checked-row-keys="handleCheck"
+
     />
   </n-card>
 
