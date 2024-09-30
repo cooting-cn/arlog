@@ -35,7 +35,7 @@ const base = {
     /*添加分类*/
     addSort: "/api/v1/add-sort",
     /*删除分类*/
-    deleteSort: "/api/",
+    deleteSort: "/api/v1/del-sort",
 }
 
 

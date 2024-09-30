@@ -28,14 +28,23 @@ func GetSort(name string) (code int) {
 }
 
 // DelSort 删除分类
-func DelSort(sort model.Sort) int {
+func DelSort(name string) int {
+	var sort model.Sort
 
-	//删除分类
-	gorm.Db.Delete(&sort)
+	// 根据 name 查找分类
+	if err := gorm.Db.Where("name = ?", name).First(&sort).Error; err != nil {
+		log.Error("分类未找到:", err)
+		return 404 // 返回未找到错误
+	}
+
+	// 删除分类
+	if err := gorm.Db.Delete(&sort).Error; err != nil {
+		log.Error("删除分类失败:", err)
+		return 500 // 返回服务器错误
+	}
 
 	log.Info("删除分类成功!", sort)
 	return 200
-
 }
 
 // GetSortList 查询所有分类

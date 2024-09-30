@@ -4,6 +4,7 @@ import (
 	"arlog/model"
 	"arlog/service"
 	"arlog/utils/res"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"strconv"
 )
@@ -26,11 +27,16 @@ func AddSort(c *gin.Context) {
 
 }
 
-// 删除分类
+// DelSort 删除分类
 func DelSort(c *gin.Context) {
-	var formData model.Sort
+
+	var formData struct {
+		Name string `json:"name"`
+	}
+
 	_ = c.ShouldBindJSON(&formData)
-	code := service.DelSort(formData)
+	fmt.Println(formData)
+	code := service.DelSort(formData.Name)
 	res.Ask(c, code, nil)
 }
 

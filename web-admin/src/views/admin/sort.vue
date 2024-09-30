@@ -1,8 +1,9 @@
 <script setup>
 
 import {h} from "vue"
-import {NButton, NSwitch} from "naive-ui"
+import {NButton, NPopconfirm, NSwitch} from "naive-ui"
 import api from "@/api/api.js";
+import {MdEditor} from "md-editor-v3";
 
 
 /*数据加载变量*/
@@ -29,7 +30,7 @@ onMounted(() => {
   api.getSort(params).then(
       res => {
         // 获取文章分类
-        data.value = res.data.result.sorts;
+        data.value = res.data.result.sorts
         /*获取数据条数*/
         pagination.itemCount = res.data.result.total
         /*关闭加载*/
@@ -58,9 +59,9 @@ function page(currentPage) {
 
     params.page = currentPage
 
-    /*请求文章*/
-    api.getArt(params).then(res => {
-      data.value = res.data.result.arts
+    /*请求分类*/
+    api.getSort(params).then(res => {
+      data.value = res.data.result.sorts
       /*关闭加载*/
       $loadingBar.finish()
       loading.value = false
@@ -106,12 +107,15 @@ const columns = ref([
     titleAlign: 'center',  // 表头居中对齐
     render(row) {
       return h(
-          NButton,
+          NPopconfirm,
           {
-            size: "small",
-            onClick: () => etArt(row)
+            onPositiveClick: () => deSrt(row), // 确认后调用的函数
+            onNegativeClick: () => $message.info('取消删除')  // 取消后的操作
           },
-          {default: () => "删除"}
+          {
+            trigger: () => h(NButton, {size: "small"}, {default: () => "删除"}),
+            default: () => "是否删除分类？" // 弹出确认框的内容
+          }
       )
     }
   }
@@ -170,37 +174,35 @@ function SearchArticle() {
   )
 }
 
-/*新增文章*/
+/*新增*/
 const showModal = ref(false)
 
 function AddArt() {
   showModal.value = true
-  operationType.value = 'add'
+
 }
 
 const formValue = ref(
     {
-      title: "",
-      desc: "",
-      content: "填写内容",
-      img: "",
-      open: 0,
-      sortId: 0,
-      id: null
+      name: ""
+
     })
 
-/*判断添加编辑变量*/
-const operationType = ref('add')
 
-
-/*编辑按钮*/
-const etArt = (rowData) => {
-  operationType.value = "update"
-  //开启弹窗
-  showModal.value = true
+/*删除按钮*/
+const deSrt = (rowData) => {
   //赋值给动态表单
-  formValue.value = rowData
+  formValue.value.name = rowData.name
 
+  api.deleteSort(formValue.value).then(
+      res => {
+        console.log(formValue.value)
+        // 删除成功
+        $message.success("删除成功" + res.data.msg)
+        // 重新当前页面数据
+        page(pagination.page)
+      }
+  )
 }
 
 
@@ -266,7 +268,33 @@ const etArt = (rowData) => {
     />
   </n-card>
 
+  <!--动态弹出框-->
+  <n-modal v-model:show="showModal">
+    <n-card
+        :bordered="false"
+        aria-modal="true"
+        class="w-20% min-w-300"
+        role="dialog"
+        size="huge"
+        title="添加分类"
+    >
+      <n-form :model="formValue" label-placement="left" label-width="auto">
+        <n-form-item label="分类名">
+          <n-input v-model:value="formValue.name" placeholder="分类名"/>
+        </n-form-item>
 
+
+      </n-form>
+
+
+      <div class="grid place-items-end ">
+        <n-button class="w-100" type="info" @click="addArt">
+          添加
+        </n-button>
+      </div>
+
+    </n-card>
+  </n-modal>
 </template>
 
 <style scoped>

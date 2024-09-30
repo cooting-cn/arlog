@@ -38,7 +38,15 @@ const api = {
     /*查询分类*/
     getSort(data) {
         return req.get(base.getSort, {params: data})
-    }
+    },
+    /*删除分类*/
+    deleteSort(data) {
+        return req.post(base.deleteSort, data)
+    },
+    /*添加分类*/
+    addSort(data) {
+        return req.post(base.addSort, data)
+    },
 }
 
 
