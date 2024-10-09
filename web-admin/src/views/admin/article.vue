@@ -379,10 +379,10 @@ function handleOpenChange(row) {
         :columns=columns
         :data=data
         :loading=loading
-        :pagination=pagination
+        :pagination="!loading ? pagination : false"
         :row-key="rowKey"
         class="mt-20"
-        min-height="690"
+        min-height="650"
         remote
         size="large"
         @update:page="page"

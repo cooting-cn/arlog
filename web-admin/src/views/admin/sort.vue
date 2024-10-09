@@ -1,12 +1,12 @@
 <script setup>
 
 import {h} from "vue"
-import {NButton, NPopconfirm, NSwitch} from "naive-ui"
-import api from "@/api/api.js";
-import {MdEditor} from "md-editor-v3";
+import {NButton, NPopconfirm} from "naive-ui"
+import api from "@/api/api.js"
 
 
 /*数据加载变量*/
+// 控制分页的显示
 const loading = ref(false)
 
 
@@ -154,40 +154,37 @@ function DeleteArticle() {
 
 }
 
-/*搜索文章*/
-const seSort = reactive({
-  title: ""
-})
-
-function SearchArticle() {
-  // 获取搜索框中的值
-  $loadingBar.start()
-  api.searchArt(seSort).then(
-      res => {
-        //获取搜索的文章
-        data.value = res.data.result.arts
-        /*获取数据条数*/
-        pagination.itemCount = res.data.result.total
-        /*关闭加载*/
-        $loadingBar.finish()
-      }
-  )
-}
 
 /*新增*/
 const showModal = ref(false)
 
 function AddArt() {
   showModal.value = true
-
 }
+
 
 const formValue = ref(
     {
       name: ""
-
     })
 
+/*确定添加按钮*/
+function addArt() {
+  api.addSort(formValue.value).then(
+      res => {
+        // 关闭弹窗
+        showModal.value = false
+        // 重新当前页面数据
+        page(pagination.page)
+        // 提示成功
+        $message.success("添加成功" + res.data.msg)
+        // 重置表单
+        formValue.value = {
+          name: ""
+        }
+      }
+  )
+}
 
 /*删除按钮*/
 const deSrt = (rowData) => {
@@ -216,10 +213,11 @@ const deSrt = (rowData) => {
         <div class="w-500px ">
           <n-space class="items-center ">
             <span>分类</span>
-            <n-input v-model:value="seSort.title" :input-props="{ autocomplete: 'wz' ,id: 'wz'}" placeholder="分类"
+            <n-input :input-props="{ autocomplete: 'wz' ,id: 'wz'}" disabled
+                     placeholder="分类"
                      style="min-width: 250px"
                      type="text"/>
-            <n-button type="tertiary" @click="SearchArticle">
+            <n-button disabled type="tertiary">
               搜索
               <template #icon>
                 <n-icon
@@ -257,10 +255,9 @@ const deSrt = (rowData) => {
         :columns=columns
         :data=data
         :loading=loading
-        :pagination=pagination
-
+        :pagination="!loading ? pagination : false"
         class="mt-20"
-        min-height="690"
+        min-height="650"
         remote
         size="large"
         @update:page="page"
