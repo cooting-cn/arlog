@@ -77,6 +77,7 @@ const columns = ref([
   {
     title: "ID",
     key: "id",
+    width: '5%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center'  // 表头居中对齐
   },
@@ -84,6 +85,7 @@ const columns = ref([
   {
     title: "分类",
     key: "name",
+    width: '20%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
 
@@ -91,18 +93,21 @@ const columns = ref([
   {
     title: "创建时间",
     key: "created_at",
+    width: '10%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
   },
   {
     title: "更新时间",
     key: "updated_at",
+    width: '10%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
   },
   {
     title: "功能",
     key: "actions",
+    width: '5%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
     render(row) {
@@ -256,8 +261,7 @@ const deSrt = (rowData) => {
         :data=data
         :loading=loading
         :pagination="!loading ? pagination : false"
-        class="mt-20"
-        min-height="650"
+        class="mt-20 min-h-726"
         remote
         size="large"
         @update:page="page"

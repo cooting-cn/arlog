@@ -100,32 +100,46 @@ const categoryMap = ref({})
 /*导航分类设置*/
 const columns = ref([
   {
-    type: "selection"
+    type: "selection",
+    width: '2%',
   },
   {
     title: "ID",
     key: "id",
+    width: '5%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center'  // 表头居中对齐
   },
   {
     title: "文章",
     key: "title",
+    width: '10%',
     align: 'center',      // 列内文本居中对齐
-    titleAlign: 'center'  // 表头居中对齐
+    titleAlign: 'center',  // 表头居中对齐
+    ellipsis: {
+      tooltip: true //带提示的省略
+    },
 
   },
   {
     title: "描述",
     key: "desc",
+    width: '20%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
+    ellipsis: {
+      tooltip: true //带提示的省略
+    }
   },
   {
     title: "分类",
     key: "sortId",
+    width: '5%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
+    ellipsis: {
+      tooltip: true //带提示的省略
+    },
     render(row) {
       return categoryMap.value[row.sortId] || '未知'
     }
@@ -133,6 +147,7 @@ const columns = ref([
   {
     title: "发布",
     key: "open",
+    width: '5%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
     render(row) {
@@ -152,18 +167,21 @@ const columns = ref([
   {
     title: "创建时间",
     key: "created_at",
+    width: '10%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
   },
   {
     title: "更新时间",
     key: "updated_at",
+    width: '10%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
   },
   {
     title: "功能",
     key: "actions",
+    width: '5%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
     render(row) {
@@ -381,8 +399,7 @@ function handleOpenChange(row) {
         :loading=loading
         :pagination="!loading ? pagination : false"
         :row-key="rowKey"
-        class="mt-20"
-        min-height="650"
+        class="mt-20 min-h-726"
         remote
         size="large"
         @update:page="page"
