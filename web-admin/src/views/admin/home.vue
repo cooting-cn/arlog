@@ -79,16 +79,15 @@ const option = ref({
         fontSize: 15,
 
       },
+      labelLayout: {
+        hideOverlap: true,  // 避免重叠
+      },
       emphasis: {
-
         label: {
           show: true,
           fontSize: 20,
           fontWeight: 'bold'
         }
-      },
-      labelLine: {
-        show: false
       },
       data: echartsData
     }
