@@ -47,6 +47,30 @@ const api = {
     addSort(data) {
         return req.post(base.addSort, data)
     },
+    /*获取标签*/
+    getTags(data) {
+        return req.get(base.getTags, {params: data})
+    },
+    /*添加标签*/
+    addTag(data) {
+        return req.post(base.addTag, data)
+    },
+    /*删除标签*/
+    deleteTag(data) {
+        return req.post(base.deleteTag, data)
+    },
+    /*获取文章分类*/
+    getArtCats() {
+        return req.get(base.getArtCats)
+    },
+    /*添加文章分类*/
+    addArtCat(data) {
+        return req.post(base.addArtCat, data)
+    },
+    /*删除文章分类*/
+    deleteArtCat(data) {
+        return req.post(base.deleteArtCat, data)
+    },
 }
 
 

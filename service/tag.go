@@ -28,16 +28,23 @@ func GetTag(name string) (code int) {
 }
 
 // DelTag 删除tag
-func DelTag(tag model.Tag) int {
+func DelTag(name string) int {
 
-	//删除分类
-	r := gorm.Db.Delete(&tag).RowsAffected
-	if r == 0 {
-		log.Info("删除tag不存在!", r)
-		return 216
+	var tag model.Tag
 
+	// 根据 name 查找tag
+	if err := gorm.Db.Where("name = ?", name).First(&tag).Error; err != nil {
+		log.Error("分类未找到:", err)
+		return 404 // 返回未找到错误
 	}
-	log.Info("删除tag成功!", r)
+
+	// 删除tag
+	if err := gorm.Db.Delete(&tag).Error; err != nil {
+		log.Error("删除分类失败:", err)
+		return 500 // 返回服务器错误
+	}
+
+	log.Info("删除分类成功!", tag)
 	return 200
 
 }

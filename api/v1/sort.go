@@ -4,7 +4,6 @@ import (
 	"arlog/model"
 	"arlog/service"
 	"arlog/utils/res"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"strconv"
 )
@@ -35,7 +34,7 @@ func DelSort(c *gin.Context) {
 	}
 
 	_ = c.ShouldBindJSON(&formData)
-	fmt.Println(formData)
+
 	code := service.DelSort(formData.Name)
 	res.Ask(c, code, nil)
 }

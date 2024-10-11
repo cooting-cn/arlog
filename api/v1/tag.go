@@ -28,9 +28,11 @@ func AddTag(c *gin.Context) {
 
 // DelTag 删除Tag
 func DelTag(c *gin.Context) {
-	var formData model.Tag
+	var formData struct {
+		Name string `json:"name"`
+	}
 	_ = c.ShouldBindJSON(&formData)
-	code := service.DelTag(formData)
+	code := service.DelTag(formData.Name)
 	res.Ask(c, code, nil)
 }
 
@@ -48,12 +50,12 @@ func GetTag(c *gin.Context) {
 	case pageSize > 100:
 		pageSize = 100
 	case pageSize <= 0:
-		pageSize = 10
+		pageSize = 12
 	}
 
 	formData, code, total := service.GetTagList(pageSize, page)
 	res.Ask(c, code, gin.H{
 		"total": total,
-		"data":  formData,
+		"tags":  formData,
 	})
 }

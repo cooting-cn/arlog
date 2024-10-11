@@ -1,8 +1,16 @@
 <script setup>
 
 import {h} from "vue"
-import {NButton, NPopconfirm} from "naive-ui"
+import {NButton, NPopconfirm, NTag} from "naive-ui"
 import api from "@/api/api.js"
+
+/*随机分类 颜色变换*/
+const types = ['success', 'warning', 'error', 'info', '']
+
+function getRandomType() {
+  const randomIndex = Math.floor(Math.random() * types.length);
+  return types[randomIndex];
+}
 
 
 /*数据加载变量*/
@@ -27,10 +35,10 @@ onMounted(() => {
 
   $loadingBar.start()
   /*查询标签*/
-  api.getSort(params).then(
+  api.getTags(params).then(
       res => {
         // 获取文章标签
-        data.value = res.data.result.sorts
+        data.value = res.data.result.tags
         /*获取数据条数*/
         pagination.itemCount = res.data.result.total
         /*关闭加载*/
@@ -60,8 +68,8 @@ function page(currentPage) {
     params.page = currentPage
 
     /*请求标签*/
-    api.getSort(params).then(res => {
-      data.value = res.data.result.sorts
+    api.getTags(params).then(res => {
+      data.value = res.data.result.tags
       /*关闭加载*/
       $loadingBar.finish()
       loading.value = false
@@ -88,6 +96,13 @@ const columns = ref([
     width: '20%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
+    render(row) {
+      return h(
+          NTag,
+          {type: getRandomType(), round: true, bordered: false}, // 你可以根据需要调整 type
+          {default: () => row.name} // 标签内容
+      )
+    }
 
   },
   {
@@ -114,7 +129,7 @@ const columns = ref([
       return h(
           NPopconfirm,
           {
-            onPositiveClick: () => deSrt(row), // 确认后调用的函数
+            onPositiveClick: () => del(row), // 确认后调用的函数
             onNegativeClick: () => $message.info('取消删除')  // 取消后的操作
           },
           {
@@ -127,43 +142,12 @@ const columns = ref([
 ])
 /*列表数据*/
 const data = ref([])
-/*选中行*/
-
-// 响应式数据
-const checkedRowKeys = ref([])
-
-
-/*删除文章按钮*/
-const delArt = reactive({
-  id: []
-})
-
-function DeleteArticle() {
-
-  if (checkedRowKeys.value.length > 0) {
-    delArt.id = checkedRowKeys.value
-    api.deleteArt(delArt).then(
-        res => {
-          // 删除成功
-          $message.success("删除成功" + res.data.msg)
-          // 重新当前页面数据
-          page(pagination.page)
-        }
-    )
-
-
-    return
-  }
-
-  $message.error("没有删除的数据" + checkedRowKeys.value.length)
-
-}
 
 
 /*新增*/
 const showModal = ref(false)
 
-function AddArt() {
+function Add() {
   showModal.value = true
 }
 
@@ -174,8 +158,8 @@ const formValue = ref(
     })
 
 /*确定添加按钮*/
-function addArt() {
-  api.addSort(formValue.value).then(
+function add() {
+  api.addTag(formValue.value).then(
       res => {
         // 关闭弹窗
         showModal.value = false
@@ -192,11 +176,11 @@ function addArt() {
 }
 
 /*删除按钮*/
-const deSrt = (rowData) => {
+const del = (rowData) => {
   //赋值给动态表单
   formValue.value.name = rowData.name
 
-  api.deleteSort(formValue.value).then(
+  api.deleteTag(formValue.value).then(
       res => {
         console.log(formValue.value)
         // 删除成功
@@ -238,7 +222,7 @@ const deSrt = (rowData) => {
 
         <div class="absolute right-0 mr-20">
 
-          <n-button class="mr-16" type="primary" @click="AddArt">
+          <n-button class="mr-16" type="primary" @click="Add">
             新增
             <template #icon>
               <n-icon
@@ -289,7 +273,7 @@ const deSrt = (rowData) => {
 
 
       <div class="grid place-items-end ">
-        <n-button class="w-100" type="info" @click="addArt">
+        <n-button class="w-100" type="info" @click="add">
           添加
         </n-button>
       </div>

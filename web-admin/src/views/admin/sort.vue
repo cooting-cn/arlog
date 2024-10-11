@@ -127,37 +127,6 @@ const columns = ref([
 ])
 /*列表数据*/
 const data = ref([])
-/*选中行*/
-
-// 响应式数据
-const checkedRowKeys = ref([])
-
-
-/*删除文章按钮*/
-const delArt = reactive({
-  id: []
-})
-
-function DeleteArticle() {
-
-  if (checkedRowKeys.value.length > 0) {
-    delArt.id = checkedRowKeys.value
-    api.deleteArt(delArt).then(
-        res => {
-          // 删除成功
-          $message.success("删除成功" + res.data.msg)
-          // 重新当前页面数据
-          page(pagination.page)
-        }
-    )
-
-
-    return
-  }
-
-  $message.error("没有删除的数据" + checkedRowKeys.value.length)
-
-}
 
 
 /*新增*/

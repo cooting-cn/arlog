@@ -18,12 +18,12 @@ const base = {
     addArt: "/api/v1/add-art",
     /*上传图片*/
     uploadImage: "/api/v1/upload-image",
-    /*获取文章标签*/
-    getArtTags: "/api/v1/get-art-tags",
-    /*添加文章标签*/
-    addArtTag: "/api/v1/add-art-tag",
-    /*删除文章标签*/
-    deleteArtTag: "/api/v1/del-art-tag",
+    /*获取标签*/
+    getTags: "/api/v1/get-tag",
+    /*添加标签*/
+    addTag: "/api/v1/add-tag",
+    /*删除标签*/
+    deleteTag: "/api/v1/del-tag",
     /*获取文章分类*/
     getArtCats: "/api/v1/get-art-cats",
     /*添加文章分类*/
