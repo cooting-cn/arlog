@@ -1,16 +1,8 @@
 <script setup>
 
 import {h} from "vue"
-import {NButton, NPopconfirm, NTag} from "naive-ui"
+import {NButton, NPopconfirm, NAvatar} from "naive-ui"
 import api from "@/api/api.js"
-
-/*随机分类 颜色变换*/
-const types = ['success', 'warning', 'error', 'info', '']
-
-function getRandomType() {
-  const randomIndex = Math.floor(Math.random() * types.length);
-  return types[randomIndex];
-}
 
 
 /*数据加载变量*/
@@ -35,7 +27,7 @@ onMounted(() => {
 
   $loadingBar.start()
   /*查询用户*/
-  api.getTags(params).then(
+  api.getAllUsers(params).then(
       res => {
         // 获取文章用户
         data.value = res.data.result.tags
@@ -83,27 +75,64 @@ function page(currentPage) {
 /*导航用户设置*/
 const columns = ref([
   {
-    title: "ID",
-    key: "id",
+    title: "头像",
+    key: "a-img",
     width: '5%',
-    align: 'center',      // 列内文本居中对齐
-    titleAlign: 'center'  // 表头居中对齐
-  },
-
-  {
-    title: "用户",
-    key: "name",
-    width: '20%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
     render(row) {
       return h(
-          NTag,
-          {type: getRandomType(), round: true, bordered: false}, // 你可以根据需要调整 type
-          {default: () => row.name} // 用户内容
+          NAvatar,
+          {
+            size: 'medium',
+            src: row['a-img']
+          },
       )
     }
+  },
 
+  {
+    title: "用户",
+    key: "username",
+    width: '5%',
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center',  // 表头居中对齐
+
+
+  },
+  {
+    title: "权限",
+    key: "power",
+    width: '5%',
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center',  // 表头居中对齐
+
+
+  },
+  {
+    title: "微信",
+    key: "wechat",
+    width: '5%',
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center',  // 表头居中对齐
+
+
+  },
+  {
+    title: "令牌otp",
+    key: "otp",
+    width: '5%',
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center',  // 表头居中对齐
+
+
+  },
+  {
+    title: "登录ip",
+    key: "ip",
+    width: '5%',
+    align: 'center',      // 列内文本居中对齐
+    titleAlign: 'center',  // 表头居中对齐
   },
   {
     title: "创建时间",

@@ -20,6 +20,7 @@ func Login(c *gin.Context) {
 	if code == 200 {
 		//登录成功传入用户名,获取jwt
 		token, _ := middleware.GenerateJWT(formData.Username)
+		formData.Password = ""
 		//登录成功返回token和用户信息
 		res.Ask(c, code, gin.H{
 			"token": token,

@@ -102,7 +102,7 @@ const option = ref({
     <!-- 登录头像用户   -->
     <n-card class="min-w-200 w-30% h-150px">
       <div class="flex items-center">
-        <n-avatar :size="60" round src="https://tg-image.com/file/b13dfda09561bf4318933.jpg"/>
+        <n-avatar :size="60" :src=st.user_img round/>
         <div class="ml-20 flex-col">
             <span class="text-20 opacity-90">
               Hello,{{ st.user }}

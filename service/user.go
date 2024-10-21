@@ -61,18 +61,21 @@ func QueUser(user model.User) int {
 }
 
 // AllUser 查询所有用户
-func AllUser() []model.User {
+func AllUser(pageSize int, page int) ([]model.User, int, int64) {
 	var users []model.User
 	//查询返回所有用户,只返回默认字段
-	gorm.Db.Find(&users)
-	//gorm.Db.Find(&users)
-	//判断查询结果
-	if len(users) == 0 {
-		log.Info("查询到用户为空")
-		return nil
-	}
+
+	var total int64
+
+	//分页查询分类
+
+	gorm.Db.Omit("password").Offset((page - 1) * pageSize).Limit(pageSize).Order("id desc").Find(&users)
+
+	// 统计有多少条数据
+	gorm.Db.Model(&users).Count(&total)
+
 	log.Info(users)
-	return users
+	return users, 200, total
 }
 
 // UpUser 更新用户数据

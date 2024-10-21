@@ -5,6 +5,7 @@ import (
 	"arlog/service"
 	"arlog/utils/res"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 // AddUser 添加用户
@@ -26,8 +27,25 @@ func AddUser(c *gin.Context) {
 
 // GetAllUser 查询所有用户
 func GetAllUser(c *gin.Context) {
+	//页数
+	page, _ := strconv.Atoi(c.Query("page"))
+	if page == 0 {
+		page = 1
+	}
+	//行数
+	pageSize, _ := strconv.Atoi(c.Query("pageSize"))
+	switch {
+	case pageSize > 100:
+		pageSize = 100
+	case pageSize <= 0:
+		pageSize = 12
+	}
+	formData, code, total := service.AllUser(pageSize, page)
+	res.Ask(c, code, gin.H{
+		"total": total,
+		"tags":  formData,
+	})
 
-	res.Ask(c, 200, service.AllUser())
 }
 
 // UpUser 更新用户信息

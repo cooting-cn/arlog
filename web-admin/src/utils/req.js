@@ -55,7 +55,10 @@ req.interceptors.response.use(res => {
                 // 显示消息
                 window.$message.warning(data.msg)
                 break
-
+            case 206:
+                // 显示消息
+                window.$message.warning(data.msg)
+                break
         }
         return res
     }, error => Promise.reject(error)

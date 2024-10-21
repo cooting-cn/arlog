@@ -59,17 +59,9 @@ const api = {
     deleteTag(data) {
         return req.post(base.deleteTag, data)
     },
-    /*获取文章分类*/
-    getArtCats() {
-        return req.get(base.getArtCats)
-    },
-    /*添加文章分类*/
-    addArtCat(data) {
-        return req.post(base.addArtCat, data)
-    },
-    /*删除文章分类*/
-    deleteArtCat(data) {
-        return req.post(base.deleteArtCat, data)
+    /*查询所有用户*/
+    getAllUsers(data) {
+        return req.get(base.getAllUser, {params: data})
     },
 }
 

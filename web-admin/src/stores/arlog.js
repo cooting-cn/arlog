@@ -4,6 +4,7 @@ const blogStore = defineStore('arlog', {
         state: () => ({
             token: "",
             user: "",
+            user_img: "",
             key: ""
         }),
         persist: {

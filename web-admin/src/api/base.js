@@ -28,14 +28,14 @@ const base = {
     getArtCats: "/api/v1/get-art-cats",
     /*添加文章分类*/
     addArtCat: "/api/v1/add-art-cat",
-    /*删除文章分类*/
-    deleteArtCat: "/api/",
     /*查询分类*/
     getSort: "/api/v1/get-sort",
     /*添加分类*/
     addSort: "/api/v1/add-sort",
     /*删除分类*/
     deleteSort: "/api/v1/del-sort",
+    /*查询用户*/
+    getAllUser: "/api/v1/get-all-user",
 }
 
 

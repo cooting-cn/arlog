@@ -6,7 +6,7 @@ type User struct {
 	Id       int    `gorm:"column:id;type:int;primary_key;AUTO_INCREMENT;comment:id" json:"id"`
 	Username string `gorm:"column:username;type:varchar(100);comment:用户名" json:"username"`
 	Password string `gorm:"column:password;type:varchar(255);comment:密码" json:"password"`
-	Power    int    `gorm:"column:power;type:int;comment:权限" json:"power"`
+	Power    string `gorm:"column:power;type:varchar(10);comment:权限" json:"power"`
 	AImg     string `gorm:"column:a-img;type:varchar(255);comment:头像" json:"a-img"`
 	Phone    int    `gorm:"column:phone;type:int;comment:手机号" json:"phone"`
 	Mail     string `gorm:"column:mail;type:varchar(100);comment:邮箱" json:"mail"`

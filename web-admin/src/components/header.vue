@@ -160,7 +160,7 @@ const formValue = ref({
 
       <n-dropdown :options="options" @select="handleSelect">
         <div class="flex cursor-pointer items-center">
-          <n-avatar :size="48" round src="https://tg-image.com/file/b13dfda09561bf4318933.jpg"/>
+          <n-avatar :size="48" :src=st.user_img round/>
           <div class="ml-12 flex flex-col ">
 
             <span class="text-20 opacity-70 text-center h-25px">{{ st.user }}</span>
