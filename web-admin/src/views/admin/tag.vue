@@ -99,7 +99,7 @@ const columns = ref([
     render(row) {
       return h(
           NTag,
-          {type: getRandomType(), round: true, bordered: false}, // 你可以根据需要调整 type
+          {type: getRandomType(), bordered: false}, // 你可以根据需要调整 type
           {default: () => row.name} // 标签内容
       )
     }

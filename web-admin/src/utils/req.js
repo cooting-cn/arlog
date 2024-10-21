@@ -39,30 +39,13 @@ req.interceptors.response.use(res => {
         const data = res.data
         // 访问成功 清理 之前的请求
         $message.destroy("loadingMessage")
-        switch (data.code) {
-
-            case 203:
-                // 显示消息
-                // 无论成功还是失败，都会执行
-
-                window.$message.warning(data.msg)
-                break
-            case 204:
-                // 显示消息
-                window.$message.warning(data.msg)
-                break
-            case 205:
-                // 显示消息
-                window.$message.warning(data.msg)
-                break
-            case 206:
-                // 显示消息
-                window.$message.warning(data.msg)
-                break
+        if (data.code !== 200) {
+            // 统一处理非200的状态码
+            window.$message.warning(data.msg);
         }
         return res
     }, error => Promise.reject(error)
-);
+)
 
 
 export default req

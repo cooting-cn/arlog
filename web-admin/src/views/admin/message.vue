@@ -22,11 +22,12 @@ function getRandomType() {
 
 <template>
   <n-card class="h-100% min-w-900 ">
-    <vue-danmaku v-model:danmus="danmus" :debounce="200" :speeds="100" class="w-100% h-550px " loop
+    <vue-danmaku v-model:danmus="danmus" :debounce="200" :speeds="100" class="w-100% h-550px "
+                 loop
                  randomChannel
                  useSlot>
       <template v-slot:dm="{ index, danmu }">
-        <div class="flex items-center">
+        <div class="flex items-center text-[16px] font-mono animate-bounce">
           <img :src="danmu.avatar" alt="用户头像" class="rounded-full w-30 h-30 mr-2">
           <n-gradient-text :type="getRandomType()">
             {{ danmu.name }}
@@ -38,9 +39,10 @@ function getRandomType() {
 
         </div>
       </template>
-      <h1>6666666666</h1>
-    </vue-danmaku>
 
+    </vue-danmaku>
+    
+    <h1>留言管理</h1>
   </n-card>
 
 </template>

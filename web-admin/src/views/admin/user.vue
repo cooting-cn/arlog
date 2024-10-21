@@ -1,7 +1,7 @@
 <script setup>
 
 import {h} from "vue"
-import {NButton, NPopconfirm, NAvatar} from "naive-ui"
+import {NButton, NPopconfirm, NAvatar, NTag} from "naive-ui"
 import api from "@/api/api.js"
 
 
@@ -106,7 +106,13 @@ const columns = ref([
     width: '5%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
-
+    render(row) {
+      return h(
+          NTag,
+          {type: row.power === 'admin' ? 'warning' : 'info', bordered: false}, // 你可以根据需要调整 type
+          {default: () => row.power === 'admin' ? '管理员' : '游客'} // 标签内容
+      )
+    }
 
   },
   {
@@ -162,7 +168,7 @@ const columns = ref([
             onNegativeClick: () => $message.info('取消删除')  // 取消后的操作
           },
           {
-            trigger: () => h(NButton, {size: "small"}, {default: () => "删除"}),
+            trigger: () => h(NButton, {disabled: row.power === 'admin', size: "small"}, {default: () => "删除"}),
             default: () => "是否删除用户？" // 弹出确认框的内容
           }
       )

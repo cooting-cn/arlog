@@ -28,7 +28,7 @@ const menuOptions = [
   {
     label: "文章管理",
     key: "art",
-    icon: () => h('i', {class: 'i-ep-notebook'}),
+    icon: () => h('i', {class: 'i-ep-document'}),
     children: [
       {
         label: () => h(
@@ -67,7 +67,7 @@ const menuOptions = [
             {default: () => "分类列表"}
         ),
         key: "sort",
-        icon: () => h('i', {class: 'i-ep-operation'}),
+        icon: () => h('i', {class: 'i-ep-notebook'}),
       }
     ]
   },
@@ -93,7 +93,7 @@ const menuOptions = [
             name: "message",
           }
         },
-        {default: () => "留言管理"}
+        {default: () => "留言弹幕"}
     ),
     key: "message",
     icon: () => h('i', {class: 'i-ep-promotion'}),
