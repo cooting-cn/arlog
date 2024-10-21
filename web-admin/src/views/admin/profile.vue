@@ -1,15 +1,18 @@
 <script setup>
+/*声明本地持久化st*/
+import blogStore from "@/stores/arlog.js";
 
+const st = blogStore()
 </script>
 
 <template>
   <n-card>
     <n-space align="center">
-      <n-avatar :size="100" round src="https://tg-image.com/file/b13dfda09561bf4318933.jpg"/>
+      <n-avatar :size="100" :src=st.user_img round/>
       <div class="ml-20">
         <div class="flex items-center text-16">
           <span>用户名:</span>
-          <span class="ml-12 opacity-80">666666</span>
+          <span class="ml-12 opacity-80">{{ st.user }}</span>
           <n-button class="ml-32" text type="primary">
             <i class="i-fe:edit mr-4"/>
             修改密码
