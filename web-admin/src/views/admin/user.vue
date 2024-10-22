@@ -130,8 +130,22 @@ const columns = ref([
     width: '5%',
     align: 'center',      // 列内文本居中对齐
     titleAlign: 'center',  // 表头居中对齐
-
-
+    ellipsis: {
+      tooltip: true //带提示的省略
+    },
+    render(row) {
+      return h(
+          NPopconfirm,
+          {
+            onPositiveClick: () => del(row), // 确认后调用的函数
+            onNegativeClick: () => $message.info('取消删除')  // 取消后的操作
+          },
+          {
+            trigger: () => h(NButton, {disabled: row.otp, size: "small"}, {default: () => "删除"}),
+            default: () => "是否删除用户？" // 弹出确认框的内容
+          }
+      )
+    }
   },
   {
     title: "登录ip",

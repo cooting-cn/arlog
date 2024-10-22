@@ -13,7 +13,7 @@ import (
 func GetOtp(name string) (url, secret string) {
 	// 生成密钥
 	key, err := totp.Generate(totp.GenerateOpts{
-		Issuer:      "ziit.com",
+		Issuer:      "arlog.cn",
 		AccountName: name,
 		Period:      30,
 		Digits:      otp.DigitsSix,

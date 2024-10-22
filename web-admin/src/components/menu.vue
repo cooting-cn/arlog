@@ -5,7 +5,10 @@ import {RouterLink, useRoute} from "vue-router";
 
 const route = useRoute()
 
-const activeKey = computed(() => route.name)
+const activeKey = computed(() => {
+  const name = route.name;
+  return typeof name === 'string' ? name : null; // 确保返回值是 string 或 null
+})
 
 function ope(key, item) {
   console.log(key, item)
@@ -157,7 +160,7 @@ const menuOptions = [
 
   <n-menu
       :options="menuOptions"
-      :value="activeKey"
+      :value=activeKey
       accordion
 
       @update:value="ope"
