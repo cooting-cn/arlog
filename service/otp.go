@@ -41,7 +41,7 @@ func BindOtp(name, coding, secret string) int {
 	}
 	log.Info("验证失败", ok)
 
-	return 201
+	return 208
 
 }
 

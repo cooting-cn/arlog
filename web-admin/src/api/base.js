@@ -36,6 +36,10 @@ const base = {
     deleteSort: "/api/v1/del-sort",
     /*查询用户*/
     getAllUser: "/api/v1/get-all-user",
+    /*获取otp*/
+    getOtp: "/api/v1/get-otp",
+    /*绑定otp*/
+    bindOtp: "/api/v1/bind-otp",
 }
 
 

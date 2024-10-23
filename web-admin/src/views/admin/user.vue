@@ -135,15 +135,11 @@ const columns = ref([
     },
     render(row) {
       return h(
-          NPopconfirm,
-          {
-            onPositiveClick: () => del(row), // 确认后调用的函数
-            onNegativeClick: () => $message.info('取消删除')  // 取消后的操作
-          },
-          {
-            trigger: () => h(NButton, {disabled: row.otp, size: "small"}, {default: () => "删除"}),
-            default: () => "是否删除用户？" // 弹出确认框的内容
-          }
+          NButton, {
+            disabled: row.otp.length > 0,
+            size: "small",
+            onClick: () => getOtp(row.username)
+          }, {default: () => "开启二级验证"}
       )
     }
   },
@@ -240,6 +236,52 @@ const del = (rowData) => {
   )
 }
 
+/*绑定otp*/
+
+
+const showModalOtp = ref(false)
+const otp = ref({
+  username: ""
+})
+const otpTxt = ref('')
+
+const bindotp = ref({
+  username: "",
+  otp: "",
+  coding: ""
+})
+
+/*获取opt编码*/
+function getOtp(username) {
+
+  otp.value.username = username
+  /*获取绑定*/
+  api.getOtp(otp.value).then(
+      res => {
+        otpTxt.value = res.data.result.url
+        // 提示成功
+        $message.success("获取" + res.data.msg)
+        /*绑定数据*/
+        bindotp.value.username = username
+        bindotp.value.otp = res.data.result.secret
+      }
+  )
+
+  //开启弹窗
+  showModalOtp.value = true
+}
+
+/*绑定otp*/
+function bindOtp() {
+
+  api.bindOtp(bindotp.value).then(
+      res => {
+        $message.success("二级验证绑定已开启" + res.data.msg)
+      }
+  )
+  //关闭弹窗
+  showModalOtp.value = false
+}
 
 </script>
 
@@ -302,7 +344,7 @@ const del = (rowData) => {
     />
   </n-card>
 
-  <!--动态弹出框-->
+  <!--动态弹出框新增-->
   <n-modal v-model:show="showModal">
     <n-card
         :bordered="false"
@@ -326,6 +368,36 @@ const del = (rowData) => {
           添加
         </n-button>
       </div>
+
+    </n-card>
+  </n-modal>
+
+  <!--动态弹出框 otp-->
+  <n-modal v-model:show="showModalOtp">
+    <n-card
+        :bordered="false"
+        aria-modal="true"
+        class="w-20% min-w-300 "
+        role="dialog"
+        size="huge"
+        title="绑定top"
+    >
+
+
+      <n-qr-code :size=300 :value=otpTxt style="padding: 0"/>
+
+
+      <div class="text-center">
+        <!--动态码-->
+        <n-form-item>
+          <n-input v-model:value="bindotp.coding" placeholder="谷歌动态码"/>
+        </n-form-item>
+        <!--开始绑定-->
+        <n-button class="w-100" type="info" @click="bindOtp">
+          确定绑定
+        </n-button>
+      </div>
+
 
     </n-card>
   </n-modal>

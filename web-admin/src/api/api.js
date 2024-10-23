@@ -63,6 +63,14 @@ const api = {
     getAllUsers(data) {
         return req.get(base.getAllUser, {params: data})
     },
+    /*获取otp*/
+    getOtp(data) {
+        return req.get(base.getOtp, {params: data})
+    },
+    /*绑定otp*/
+    bindOtp(data) {
+        return req.post(base.bindOtp, data)
+    },
 }
 
 

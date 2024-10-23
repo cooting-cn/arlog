@@ -5,6 +5,7 @@ import (
 	"arlog/model"
 	"arlog/service"
 	"arlog/utils/res"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -33,21 +34,26 @@ func Otp(c *gin.Context) {
 
 // BindOtp 绑定otp
 func BindOtp(c *gin.Context) {
-	var formData model.User
+	var formData struct {
+		Username string `json:"username"`
+		Otp      string `json:"otp"`
+		Coding   string `json:"coding"`
+	}
+
 	_ = c.ShouldBindJSON(&formData)
 	//从请求链接获取coding编码
-	coding, _ := c.GetQuery("coding")
+
 	//开始绑定otp
-	code := service.BindOtp(formData.Username, coding, formData.Otp)
+	code := service.BindOtp(formData.Username, formData.Coding, formData.Otp)
 	res.Ask(c, code, nil)
 }
 
 // GetOtp 获取otp绑定密钥
 func GetOtp(c *gin.Context) {
-	var formData model.User
-	_ = c.ShouldBindJSON(&formData)
+	username := c.Query("username")
+	fmt.Println(username)
 	//开始绑定otp
-	url, secret := service.GetOtp(formData.Username)
+	url, secret := service.GetOtp(username)
 	res.Ask(c, 200, gin.H{
 		"url":    url,
 		"secret": secret,

@@ -41,7 +41,8 @@ req.interceptors.response.use(res => {
         $message.destroy("loadingMessage")
         if (data.code !== 200) {
             // 统一处理非200的状态码
-            window.$message.warning(data.msg);
+            window.$message.warning(data.msg)
+            return
         }
         return res
     }, error => Promise.reject(error)
