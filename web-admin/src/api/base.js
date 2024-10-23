@@ -40,6 +40,9 @@ const base = {
     getOtp: "/api/v1/get-otp",
     /*绑定otp*/
     bindOtp: "/api/v1/bind-otp",
+    /*otp登录*/
+    otp: "/api/v2/otp",
+
 }
 
 

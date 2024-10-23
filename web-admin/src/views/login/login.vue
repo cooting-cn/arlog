@@ -2,6 +2,7 @@
 import blogStore from "@/stores/arlog.js";
 import api from "@/api/api.js";
 import router from "@/router/index.js";
+import {NButton} from "naive-ui";
 
 /*声明本地持久化st*/
 const st = blogStore()
@@ -41,6 +42,49 @@ function login() {
 
     }
   })
+}
+
+/*绑定otp*/
+
+
+const showModalOtp = ref(false)
+const bindOtp = ref({
+  username: "",
+  coding: ""
+})
+
+/*登录otp*/
+function showOtp() {
+  showModalOtp.value = true
+  bindOtp.value.username = logInfo.username
+}
+
+
+function loginOtp() {
+
+  api.otp(bindOtp.value).then(
+      res => {
+        switch (res.data.code) {
+            /*登录成功*/
+          case 200:
+            /*存储token到本地*/
+            st.token = res.data.result.token
+            /*存储登录的用户名*/
+            st.user = res.data.result.user.username
+            /*获取头像*/
+            st.user_img = res.data.result.user["a-img"]
+            // 显示成功消息
+            $message.success(st.user + "登录成功")
+            /*跳转到后台*/
+            router.push("admin")
+            break
+            /*登录成功*/
+
+        }
+      }
+  )
+  //关闭弹窗
+  showModalOtp.value = false
 }
 </script>
 
@@ -98,6 +142,7 @@ function login() {
             class="h-40 flex-1 rounded-5 text-16"
             ghost
             type="warning"
+            @click="showOtp"
         >
           otp一键登录
         </n-button>
@@ -120,7 +165,32 @@ function login() {
     </div>
   </div>
 
+  <!--动态弹出框 otp-->
+  <n-modal v-model:show="showModalOtp">
+    <n-card
+        :bordered="false"
+        aria-modal="true"
+        class="w-15% min-w-200 "
+        role="dialog"
+        size="huge"
+        title="登录top"
+    >
+      当前用户{{ bindOtp.username }}
 
+      <div class="text-center">
+        <!--动态码-->
+        <n-form-item>
+          <n-input v-model:value="bindOtp.coding" maxlength="6" placeholder="谷歌动态码"/>
+        </n-form-item>
+
+        <n-button type="info" @click="loginOtp">
+          确定登录
+        </n-button>
+      </div>
+
+
+    </n-card>
+  </n-modal>
 </template>
 
 <style scoped>

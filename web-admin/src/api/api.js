@@ -71,6 +71,10 @@ const api = {
     bindOtp(data) {
         return req.post(base.bindOtp, data)
     },
+    /*otp登录*/
+    otp(data) {
+        return req.post(base.otp, data)
+    },
 }
 
 
