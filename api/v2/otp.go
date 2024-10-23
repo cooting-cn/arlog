@@ -2,7 +2,6 @@ package v2
 
 import (
 	"arlog/middleware"
-	"arlog/model"
 	"arlog/service"
 	"arlog/utils/res"
 	"fmt"
@@ -11,19 +10,22 @@ import (
 
 // Otp 登录开启otp验证
 func Otp(c *gin.Context) {
-	var formData model.User
+	var formData struct {
+		Username string `json:"username"`
+		Coding   string `json:"coding"`
+	}
 	_ = c.ShouldBindJSON(&formData)
-	//从请求链接获取coding编码
-	coding, _ := c.GetQuery("coding")
+
 	//开始验证otp
-	code, ok := service.OtpToken(coding, formData.Username)
+	code, ok, userFormData := service.OtpToken(formData.Coding, formData.Username)
 	if ok {
 		//登录成功传入用户名,获取jwt
 		token, _ := middleware.GenerateJWT(formData.Username)
+		userFormData.Password = ""
 		//登录成功返回token和用户信息
 		res.Ask(c, code, gin.H{
-			"user":  formData.Username,
 			"token": token,
+			"user":  userFormData,
 		})
 		return
 	}

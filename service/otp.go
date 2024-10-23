@@ -46,7 +46,7 @@ func BindOtp(name, coding, secret string) int {
 }
 
 // OtpToken 从mysql 获取secret,验证otp令牌
-func OtpToken(coding, username string) (int, bool) {
+func OtpToken(coding, username string) (int, bool, model.User) {
 	var user model.User
 	//从user表中获取otp的编码
 	gorm.Db.Where("username", username).First(&user)
@@ -56,9 +56,9 @@ func OtpToken(coding, username string) (int, bool) {
 	log.Info("开始验证的数据", user.Otp, coding, ok)
 	if ok {
 		log.Info("验证成功", ok)
-		return 200, ok
+		return 200, ok, user
 	} else {
 		log.Info("验证失败", ok)
-		return 208, ok
+		return 208, ok, model.User{}
 	}
 }
